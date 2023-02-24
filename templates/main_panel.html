@@ -1,0 +1,52 @@
+{% load static %}
+{% with menuUrl=my_value %}
+{% endwith %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/main-panel.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Document</title>
+</head>
+<body>
+    <main class="main">
+        <div class="menu">
+            <div class="menu-info">
+                <img class="logo" src="{% static 'logo/logo-color.png'%}">
+                <div class="info">
+                    <img class="photo" src="{% static 'images/photo.png'%}">
+                    <div class="title">
+                        <h5>操作员</h5>
+                        <h3>{{ request.user.real_name }}</h3>
+                    </div>
+                    <div class="separator">
+                    </div>
+                    <div class="contact">
+                        <h5>{{ request.user.email }}</h5>
+                        <h5>{{ request.user.cellphone_number }}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-items" id="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-title">
+                        <i class="fa-solid fa-file-lines"></i>
+                        <h3 class="menu-item-text">基本信息管理</h3>
+                    </div>
+                    <i class="fa-solid fa-caret-right"></i>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+
+        </div>
+    </main>
+    <h1>Welcome!{{ request.user.username}}</h1>
+    <a href="{% url 'logout' %}">logout</a>
+    <script src="{% static 'js/menu.js'%}"></script>
+</body>
+</html>

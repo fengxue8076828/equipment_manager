@@ -1,0 +1,102 @@
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.main{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+.menu{
+    width: 25%;
+    height: 100%;
+    background: #3DAAC2;
+}
+.main-content {
+    width: 70%;
+    height: 100%;
+}
+
+.logo{
+    display: block;
+    width: 100px;
+    margin-left: 20px;
+}
+.menu-info {
+    color:white;
+}
+.info {
+    position: relative;
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+.info h5 {
+    margin-block-start:0px;
+    margin-block-end:0px;
+    margin: 0;
+    padding: 0;
+    margin-left:10px;
+}
+.info h3 {
+    margin-block-start:0px;
+    margin-block-end:0px;
+    margin: 0;
+    padding: 0;
+    margin-left:15px;
+}
+.title,.contact {
+    width: 60%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 5px;
+}
+.separator {
+    width: 100%;
+    height: 2px;
+    background: white;
+}
+.photo {
+    width: 80px;
+    border-radius: 100px;
+    position: absolute;
+    right: 20px;
+    top: -15px;
+    border: 5px solid #3DAAC2;
+}
+.menu-items {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color:white;
+}
+.menu-item {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.menu-item i {
+    color:#fcc60d;
+    font-size:20px;
+}
+.menu-item-title {
+    display: flex;
+    align-items: center;
+}
+
+.menu-item-title i {
+    width: 25px;
+    height: 25px;
+    font-size:25px;
+    color:#fcc60d;
+    background-color: 3DAAC2;
+
+    margin-right: 10px;
+}
