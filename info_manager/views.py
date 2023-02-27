@@ -21,9 +21,6 @@ class MainPanelView(LoginRequiredMixin,TemplateView):
 class MenuView(View):
     def get(self,request,*args,**kwargs):
         menu=request.user.role.modules.all()
-        print("*****************")
-        print(menu)
-
         menu_data=serializers.serialize("json",menu)
         return JsonResponse({"menu":menu_data},status=200)
 
