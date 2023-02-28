@@ -16,13 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.contrib.auth.views import LoginView,LogoutView
-from info_manager.views import MainPanelView,MenuView
-from info_manager.views import CustomedLoginView
+from info_manager.views import MainPanelView,MenuView,CustomedLoginView,UserProfileView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/',CustomedLoginView.as_view(),name="login"), 
     path('logout/',LogoutView.as_view(),name="logout"), 
     path('',MainPanelView.as_view(),name="main_panel"), 
-    path('menu/',MenuView.as_view(),name="menu")
+    path('menu/',MenuView.as_view(),name="menu"),
+    path('user-profile/',UserProfileView.as_view(),name="user-profile")
 ]

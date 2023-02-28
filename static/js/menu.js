@@ -48,7 +48,6 @@ function getMenu(){
         if (this.status===200){
             const responseText=JSON.parse(this.responseText)
             let menuItems=JSON.parse(responseText.menu)
-            console.log(menuItems)
             menuContainer.innerHTML=renderMenu(null,menuItems)
         }
     }
@@ -67,4 +66,17 @@ document.addEventListener('click',function(e){
             }
         })
     }
+})
+
+document.getElementById("photo").addEventListener('click',function(){
+    const xhr=new XMLHttpRequest()
+    mainContent=document.getElementById("main-content")
+    xhr.open('GET','user-profile/',true)
+    xhr.onload=function(){
+        if (this.status==200){
+            const contentText=JSON.parse(this.responseText)
+            mainContent.innerHTML=contentText.content
+        }
+    }
+    xhr.send()
 })

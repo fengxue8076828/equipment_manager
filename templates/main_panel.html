@@ -18,7 +18,7 @@
             <div class="menu-info">
                 <img class="logo" src="{% static 'logo/logo-color.png'%}">
                 <div class="info">
-                    <a href="#"><img class="photo" src="{% static 'images/photo.png'%}"></a>
+                    <img id="photo" class="photo" src="{% static 'images/photo.png'%}">
                     <div class="title">
                         <h5>操作员</h5>
                         <h3>{{ request.user.real_name }}</h3>
@@ -35,9 +35,8 @@
             </div>
             <a href="{% url 'logout' %}" class="btn-logout">logout</a>
         </div>
-        <div class="main-content">
-            {% block content %}
-            {% endblock content%}
+        <div id="main-content" class="main-content">
+            
         </div>
     </main>
     <script src="{% static 'js/menu.js'%}"></script>
