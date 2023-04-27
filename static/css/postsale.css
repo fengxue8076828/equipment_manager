@@ -1,0 +1,28 @@
+#device-select {
+    width: 200px;
+}
+
+#outbound-operation {
+    display: flex;
+    justify-content: flex-start;
+}
+#outbound-operation input{
+    width: 20%;
+    margin-right: 10px;
+}
+#outbound-operation select {
+    margin-left: auto;
+    margin-right: 10px;
+}
+#sold-device-operation {
+    display: flex;
+    justify-content: flex-start;
+}
+#sold-device-operation input {
+    width: 20%;
+    margin-right: 10px;
+}
+#sold-device-operation select {
+    margin-left: auto;
+    margin-right: 10px;
+}

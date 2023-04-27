@@ -1,0 +1,20 @@
+<div class="content-container">
+    <h1>设备类别管理</h1>
+    <div class="operations">
+        <button class="btn" onclick="categoryCreate()">添加新类别</button>
+    </div>
+    <table>
+        <tr>
+            <th>名称</th>
+            <th>描述</th>
+            <th>操作</th>
+        </tr>
+        {% for category in equip_categories %}
+        <tr data-id="{{category.id}}">
+            <td><input type="text" name="name" value="{{category.name}}"  readonly="false" ondblclick="enableEdit(event)" onmouseleave="disableEdit(event)"></td>
+            <td><input type="text" name="description" value="{{category.description}}" readonly="false" ondblclick="enableEdit(event)" onmouseleave="disableEdit(event)"></td> 
+            <td><button class="btn" onclick="toggle(event)">展开二级类别</button><button class="btn" onclick="updateCategory(event)">修改</button><button class="btn" onclick="deleteCategory(event)">删除</button></td>      
+        </tr>
+        {% endfor %}
+    </table>
+</div>

@@ -1,0 +1,30 @@
+<div class="content-container">
+    <h1>设备管理</h1>
+    <div class="operations">
+        <button class="btn" onclick="equipmentCreate()">添加新设备</button>
+    </div>
+    <table>
+        <tr>
+            <th>名称</th>
+            <th>类别</th>
+            <th>型号</th>
+            <th>硬件编号</th>
+            <th>软件编号</th>
+            <th>价格</th>
+            <th>库存数量</th>
+            <th>操作</th>
+        </tr>
+        {% for equipment in equipments %}
+        <tr data-id="{{equipment.id}}">
+            <td>{{equipment.name}}</td>
+            <td>{{equipment.category}}</td>
+            <td>{{equipment.model}}</td>
+            <td>{{equipment.hardware_serial}}</td>
+            <td>{{equipment.software_serial}}</td>
+            <td>{{equipment.price}}</td>
+            <td>{{equipment.devices.count}}</td>
+            <td><button class="btn" onclick="updateEquipment(event)">修改</button><button class="btn" onclick="deleteEquipment(event)">删除</button><button class="btn" onclick="listDevice(event)">查看库存</button></td>      
+        </tr>
+        {% endfor %}
+    </table>
+</div>

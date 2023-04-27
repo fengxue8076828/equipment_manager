@@ -1,0 +1,9 @@
+<table>
+    {% for category in equip_categories %}
+    <tr data-id="{{category.id}}" data-parent-id="{{category.parent.id}}">
+        <td><input type="text" name="name" value="{{category.name}}"  readonly="false" ondblclick="enableEdit(event)" onmouseleave="disableEdit(event)"></td>
+        <td><input type="text" name="description" value="{{category.description}}"  readonly="false" ondblclick="enableEdit(event)" onmouseleave="disableEdit(event)"></td> 
+        <td><button class="btn" onclick="updateCategory(event)">修改</button><button class="btn" onclick="deleteCategory(event)">删除</button></td>      
+    </tr>
+    {% endfor %}
+</table>

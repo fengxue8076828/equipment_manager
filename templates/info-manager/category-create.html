@@ -1,0 +1,25 @@
+{% load static %}
+<div class="content-container">
+    <h1>添加新类别</h1>
+    <div class="form-container">
+        <form id="category-create-form" onsubmit="categoryCreateSubmit(event)" novalidate>
+            {% csrf_token %}
+            {% if form.errors %}
+            <div>{{ form.errors }}</div>
+            {% endif %}
+            <div class="field">
+                <label for="{{ form.parent.id_for_label }}">上级类别</label>         
+                {{ form.parent }}
+            </div> 
+            <div class="field">
+                <label for="{{ form.name.id_for_label }}">类别名称</label>         
+                {{ form.name }}
+            </div> 
+            <div class="field">
+                <label for="{{ form.description.id_for_label }}">类别描述</label>         
+                {{ form.description }}
+            </div>          
+            <button class="btn" type="submit">添加</button>
+        </form>
+    </div>
+</div>

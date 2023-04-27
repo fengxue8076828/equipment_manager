@@ -1,1 +1,49 @@
-<p>welcome!</p>
+{% load static %}  
+<div id="container-profile">
+    <form id="user-form" enctype="multipart/form-data" onsubmit="updateUser(event)"> 
+        {% csrf_token %}     
+        <div id="profile-title">
+            <img id="profile-title-image" src="{{ request.user.photo.url }}" alt="photo">       
+            <div>       
+                <input type="file" id="id_photo" name="photo" hidden="hidden" onchange="previewPhoto(event)">
+                <button type="button" class="btn" id="change-photo-btn" hidden="hidden" onclick="changePhoto()">更改头像</button>
+            </div> 
+            <h3>{{ request.user.real_name }}</h3>
+            <h5>{{ request.user.role }}</h5>
+        </div>
+        <div id="profile-detail">
+            {% if messages %}
+                {% for message in messages %}
+                    <span{% if message.tags %} id='{{ message.tags }}' class='{{ message.tags }}' {% endif %}>{{ message }}</span>
+                {% endfor %}
+            {% endif %}
+            <div class="field">
+                <label for="{{ form.username.id_for_label }}">用户名</label>         
+                {{ form.username }}
+            </div>  
+            <div class="field">
+                <label for="{{ form.real_name.id_for_label }}">姓名</label>         
+                {{ form.real_name }}
+            </div>   
+            <div class="field">
+                <label for="{{ form.fix_phone_number.id_for_label }}">座机</label> 
+                {{ form.fix_phone_number }}
+            </div>
+            <div class="field">
+                <label for="{{ form.cellphone_number.id_for_label }}">手机</label> 
+                {{ form.cellphone_number }}
+            </div>
+            <div class="field">
+                <label for="{{ form.email.id_for_label }}">email</label> 
+                {{ form.email }}
+            </div>
+            <div id="btn-container">
+                <div>
+                    <button type="button" class="btn" id="change-password" onclick="updateUserPassword()">修改密码</button>
+                    <button type="button" class="btn" id="update-info" onclick="enableUserEdit(event)">更新资料</button> 
+                </div>
+                    <button id="submit" type="submit" class="btn hide">保存更改</button>
+            </div>        
+        </div>
+    </form>
+</div>

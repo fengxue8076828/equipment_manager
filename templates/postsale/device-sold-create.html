@@ -1,0 +1,54 @@
+{% load static %}
+<div class="content-container">
+    <h1>设备仪器出库</h1>
+    <table style="width: 60%;margin-bottom: 50px;">
+        <tr>
+            <th>设备名称</th>
+            <th>型号</th>
+            <th>仓库</th>
+            <th>状态</th>          
+        </tr>
+        {% for device in devices %}
+        <tr data-id="{{device.id}}">
+            <td>{{device.equipment.name}}</td>
+            <td>{{device.equipment.model}}</td>  
+            <td>{{device.warehouse}}</td>
+            <td>{{device.get_state_display}}</td>                 
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="form-container">
+
+        <form id="device-sold-create-form" onsubmit="deviceSoldCreateSubmit(event)" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if form.errors %}
+            <div>{{ form.errors }}</div>
+            {% endif %}
+            <div class="field">
+                <label for="{{ form.buyer.id_for_label }}">客户名称</label>         
+                {{ form.buyer }}
+            </div>
+            <div class="field">
+                <label for="{{ form.inbound_image.id_for_label }}">付款状态</label> 
+                {{ form.pay_state }}
+            </div>
+            <div class="field">
+                <label for="{{ form.inbound_image.id_for_label }}">付款日期</label> 
+                {{ form.pay_date }}
+            </div>
+            <div class="field">
+                <label for="{{ form.inbound_image.id_for_label }}">出库单</label> 
+                {{ form.outbound_image }}
+            </div>
+            <button class="btn" type="submit">添加</button>
+            <button class="btn" type="button" onclick="outbound(event)">打印出库单</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+            

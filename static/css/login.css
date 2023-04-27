@@ -1,10 +1,8 @@
+@import url("base.css");
 body {
-    margin:0;
-    padding: 0;
-    background: #3DAAC2;
-    font-size: 16px;
-    box-sizing: border-box;
+    background-color: #3DAAC2;
 }
+
 #form-container{
     display: flex;
     flex-direction: column;

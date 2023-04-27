@@ -1,0 +1,45 @@
+from django import forms
+from .models import Equipment,Device,Inbound
+from django.contrib.auth import get_user_model
+from info_manager.models import EquipCategory
+
+User = get_user_model()
+
+class EquipmentForm(forms.ModelForm):
+    category = forms.ModelChoiceField(EquipCategory.objects.exclude(parent=None))
+    class Meta:
+        model = Equipment
+        fields =[
+            'name',
+            'category',
+            'model',
+            'hardware_serial',
+            'software_serial',
+            'price',
+        ]
+class DeviceForm(forms.ModelForm):
+    maintainer = forms.ModelChoiceField(User.objects.filter(role__id=4))
+    class Meta:
+        model = Device
+        fields =[
+            'equipment',
+            'warehouse',
+            'maintainer'
+        ]
+class InboundForm(forms.ModelForm):
+    class Meta:
+        model = Inbound
+        fields =[
+            'equipment',
+            'supplier',
+            'warehouse',
+            'amount',
+            'inbound_image',
+        ]
+
+class DeviceStateForm(forms.ModelForm):
+    class Meta:
+        model = Device
+        fields = [
+            'state'
+        ]

@@ -1,0 +1,21 @@
+<div class="content-container">
+    <h1>查看出库单设备列表</h1>
+    <table>
+        <tr>
+            <th>出库单号</th>
+            <th>设备名称</th>
+            <th>型号</th>
+            <th>安装位置</th>
+            <th>状态</th>          
+        </tr>
+        {% for sold_device in sold_devices %}
+        <tr">
+            <td>{{sold_device.outbound.outbound_number}}</td>
+            <td>{{sold_device.device.equipment.name}}</td>
+            <td>{{sold_device.device.equipment.model}}</td>  
+            <td>{{sold_device.fix_address}}</td>
+            <td>{{sold_device.state}}</td>                 
+        </tr>
+        {% endfor %}
+    </table>
+</div>

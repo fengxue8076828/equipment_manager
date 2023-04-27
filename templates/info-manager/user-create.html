@@ -1,0 +1,49 @@
+{% load static %}
+<div class="content-container">
+    <h1>添加新用户</h1>
+    <div class="form-container">
+        <form id="user-create-form" onsubmit="userCreateSubmit(event)">
+            {% csrf_token %}
+            {% if messages %}
+                {% for message in messages %}
+                    <span{% if message.tags %} id='{{ message.tags }}' class='{{ message.tags }}' {% endif %}>{{ message }}</span>
+                {% endfor %}
+            {% endif %}
+
+            {% if form.errors %}
+            <div>{{ form.errors }}</div>
+            {% endif %}
+            <div class="field">
+                <label for="{{ form.username.id_for_label }}">用户名</label>         
+                {{ form.username }}
+            </div> 
+            <div class="field">
+                <label for="{{ form.real_name.id_for_label }}">姓名</label>         
+                {{ form.real_name }}
+            </div> 
+            <div class="field">
+                <label for="{{ form.fix_phone_number.id_for_label }}">座机</label> 
+                {{ form.fix_phone_number }}
+            </div>
+            <div class="field">
+                <label for="{{ form.cellphone_number.id_for_label }}">手机</label> 
+                {{ form.cellphone_number }}
+            </div>
+            <div class="field">
+                <label for="{{ form.email.id_for_label }}">email</label> 
+                {{ form.email }}
+            </div>
+            <div class="field">
+                <label for="{{ form.role.id_for_label }}">角色</label> 
+                {{ form.role }}
+            </div>
+            <button class="btn" type="submit">添加</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+            

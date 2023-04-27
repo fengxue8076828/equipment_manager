@@ -1,0 +1,92 @@
+@import url("base.css");
+
+#container-profile {
+    width: 40%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    border-radius: 5px;
+    box-shadow: 0 0 20px lightgray;
+}
+
+#profile-title {
+    padding: 3em;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "photo username"
+        "photo userrole";
+    justify-items: center;
+    align-items:center;
+    background-color: #3DAAC2;
+    border-top-left-radius:5px;
+    border-top-right-radius: 5px;
+}
+#profile-title h3 {
+    grid-area:username;
+    margin: 0;
+}
+#profile-title h5 {
+    grid-area:userrole;
+    margin: 0;
+}
+
+#profile-title-image {
+    grid-area:photo;
+    width:50%;
+    border-radius: 100px;
+}
+
+#profile-detail {
+    width: 100%;
+    border: none;
+    padding: 3em;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.field{
+    margin:15px 0;
+    position: relative;
+}
+
+
+
+#btn-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 3em;
+    margin-bottom: 1em;
+
+}
+#btn-container div {
+    display: flex;
+    align-items: center;
+}
+
+form {
+    display: block;
+    margin:auto;
+}
+.success {
+    /* display: block; */
+    font-size:0.3rem;
+    background-color:limegreen;
+    color:white;
+    margin-bottom: 2em;
+    text-align: center;
+    border-radius: 3px;
+
+}
+
+.hide {
+    display: none;
+    background-color: blue;
+    transition: 0.5s;
+}
+
+

@@ -7,6 +7,11 @@ from django.contrib.auth.models import AbstractUser
 class Module(models.Model):
     name=models.CharField(max_length=50)
     parent_module=models.ForeignKey("self",blank=True,null=True,on_delete=models.SET_NULL)
+    icon=models.CharField(max_length=100,null=True,blank=True)
+    link=models.CharField(max_length=50,null=True,blank=True)
+
+    class Meta:
+        ordering = ['id']
 
     def __str__(self):
         return self.name
@@ -26,7 +31,25 @@ class User(AbstractUser):
     photo=models.ImageField(upload_to="user-images/")
 
     def __str__(self):
-        return self.real_name
+        return self.username
+    
+class EquipCategory(models.Model):
+    name = models.CharField(max_length=50)
+    parent = models.ForeignKey("self",null=True,blank=True,on_delete=models.CASCADE)
+    description = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+    
+class Warehouse(models.Model):
+    number = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
+    description = models.CharField(max_length=500)
+    location = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+    
 
 
 

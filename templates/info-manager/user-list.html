@@ -1,0 +1,36 @@
+<div class="content-container">
+    <h1>用户管理</h1>
+    <div class="operations">
+        <button class="btn" onclick="userCreate()">添加新用户</button>
+        
+        <select name="roles" id="roles" onchange="filterUsers()">
+            <option value="-1">全部</option>
+            {% for role in roles %}
+            <!--remember the previous choice-->
+            <option value="{{ role.id }}" {% if role_id == role.id %} selected {% endif %}>{{ role.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <table>
+        <tr>
+            <th>用户名</th>
+            <th>姓名</th>
+            <th>座机</th>
+            <th>手机</th>
+            <th>email</th>
+            <th>类别</th>
+            <th>操作</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{user.username}}</td>
+            <td>{{user.real_name}}</td>
+            <td>{{user.fix_phone_number}}</td>
+            <td>{{user.cellphone_number}}</td>
+            <td>{{user.email}}</td> 
+            <td>{{user.role}}</td>   
+            <td><button data-id="{{user.id}}" class="btn" onclick="userDelete(event)">删除</button><button data-id="{{user.id}}" class="btn" onclick="passwordReset(event)">重置密码</button></td>      
+        </tr>
+        {% endfor %}
+    </table>
+</div>

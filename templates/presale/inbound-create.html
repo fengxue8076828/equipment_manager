@@ -1,0 +1,65 @@
+{% load static %}
+<div class="content-container">
+    <h1>设备仪器入库</h1>
+    <div id="equipment-container">
+        <div class="row">
+            <h5>设备名：</h5>
+            <h5 id="name"></h5>
+        </div>
+        <div class="row">
+            <h5>设备型号：</h5>
+            <h5 id="model"></h5>
+        </div>
+        <div class="row">
+            <h5>硬件编号：</h5>
+            <h5 id="hardware_serial"></h5>
+        </div>
+        <div class="row">
+            <h5>软件编号：</h5>
+            <h5 id="software_serial"></h5>
+        </div>
+    </div>
+    <div class="form-container">
+        <form id="device-create-form" onsubmit="deviceCreateSubmit(event)" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if form.errors %}
+            <div>{{ form.errors }}</div>
+            {% endif %}
+
+            <div class="field">
+                <select id="id_equipment" onchange="getEquipment(event)">
+                    <option value="">请选择设备</option>
+                    {% for equipment in equipments %}
+                    <option value="{{equipment.id}}">{{equipment.name}}</option>
+                    {% endfor %}
+                </select>
+    
+            </div>
+            <div class="field">
+                <label for="{{ form.supplier.id_for_label }}">供货商</label>         
+                {{ form.supplier }}
+            </div> 
+            <div class="field">
+                <label for="{{ form.amount.id_for_label }}">数量</label>         
+                {{ form.amount }}
+            </div> 
+            <div class="field">
+                <label for="{{ form.warehouse.id_for_label }}">仓库</label>         
+                {{ form.warehouse }}
+            </div> 
+            <div class="field">
+                <label for="{{ form.inbound_image.id_for_label }}">入库单</label> 
+                {{ form.inbound_image }}
+            </div>
+            <button class="btn" type="submit">添加</button>
+            <button class="btn" type="button" onclick="inbound(event)">打印入库单</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+            

@@ -1,0 +1,29 @@
+{% load static %}
+<div class="content-container">
+    <h1>添加新类别</h1>
+    <div class="form-container">
+        <form id="warehouse-create-form" onsubmit="warehouseCreateSubmit(event)" novalidate>
+            {% csrf_token %}
+            {% if form.errors %}
+            <div>{{ form.errors }}</div>
+            {% endif %}
+            <div class="field">
+                <label for="{{ form.number.id_for_label }}">编号</label>         
+                {{ form.number }}
+            </div> 
+            <div class="field">
+                <label for="{{ form.name.id_for_label }}">名称</label>         
+                {{ form.name }}
+            </div>
+            <div class="field">
+                <label for="{{ form.location.id_for_label }}">位置</label>         
+                {{ form.location }}
+            </div> 
+            <div class="field">
+                <label for="{{ form.description.id_for_label }}">描述</label>         
+                {{ form.description }}
+            </div>          
+            <button class="btn" type="submit">添加</button>
+        </form>
+    </div>
+</div>

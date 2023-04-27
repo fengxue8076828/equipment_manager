@@ -1,0 +1,24 @@
+<div class="content-container">
+    <h1>选择出库设备</h1>
+    <div class="operations">
+        <button class="btn" onclick="toOutbound()">出库</button>
+    </div>
+    <table>
+        <tr>
+            <th>选择</th>
+            <th>设备名称</th>
+            <th>型号</th>
+            <th>仓库</th>
+            <th>状态</th>          
+        </tr>
+        {% for device in devices %}
+        <tr data-id="{{device.id}}">
+            <td><input type="checkbox" name="select-device" value="{{device.id}}" /></td>
+            <td>{{device.equipment.name}}</td>
+            <td>{{device.equipment.model}}</td>  
+            <td>{{device.warehouse}}</td>
+            <td>{{device.get_state_display}}</td>                 
+        </tr>
+        {% endfor %}
+    </table>
+</div>

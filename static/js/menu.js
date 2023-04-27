@@ -19,8 +19,8 @@ function renderMenuItem(item){
         menuItemHTML=`
             <div class="menu-item" id="${item.pk}">
                 <div class="menu-item-title">
-                    <i class="fa-solid fa-file-lines"></i>
-                    <h3 class="menu-item-text">${item.fields.name}</h3>
+                    ${item.fields.icon }
+                    <h4>${item.fields.name}</h4>
                 </div>
                 <i class="fa-solid fa-caret-right"></i>
             </div>
@@ -28,9 +28,9 @@ function renderMenuItem(item){
     }else {
         menuItemHTML=`
         <div class="menu-item menu-second hide" id="${item.pk}" data-parent="${item.fields.parent_module}">
-            <div class="menu-item-title">
-                <i class="fa-solid fa-file-lines"></i>
-                <h3 class="menu-item-text">${item.fields.name}</h3>
+            <div class="menu-item-title"  onclick="gotoLink('${ item.fields.link }')">
+                ${item.fields.icon }
+                <h5>${item.fields.name}</h5>
             </div>
             <i class="fa-solid fa-caret-right"></i>
         </div>
@@ -76,6 +76,10 @@ document.getElementById("photo").addEventListener('click',function(){
         if (this.status==200){
             const contentText=JSON.parse(this.responseText)
             mainContent.innerHTML=contentText.content
+            inputs=document.querySelectorAll("input")
+            inputs.forEach(function(input){
+                input.setAttribute("disabled","")
+            })
         }
     }
     xhr.send()

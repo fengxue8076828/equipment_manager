@@ -1,0 +1,49 @@
+<div class="content-container">
+    <h1>已售设备管理</h1>
+    <div class="operations" id="sold-device-operation">
+        <input type="text" id="equipment-name" name="equipment-name" placeholder="设备名称" value="{{equipment_name}}">
+        <input type="text" id="buyer" name="buyer" placeholder="客户名称" value="{{buyer}}">
+        <input type="text" id="fix-address" name="fix-address" placeholder="安装地点" value="{{fix_address}}">
+        <select name="state" id="state">
+            <option value="">全部</option>
+            <option value="good" {% if state == "good" %}selected{% endif %}>良好</option>
+            <option value="bad" {% if state == "bad" %}selected{% endif %}>故障</option>
+            <option value="maintaining" {% if state == "maintaining" %}selected{% endif %}>检修中</option>
+        </select>
+        <button class="btn" onclick="searchSoldDevice(event)">查询</button>
+    </div>
+    <table>
+        <tr>
+            <th>客户名称</th>
+            <th>设备名称</th>
+            <th>型号</th>
+            <th>安装位置</th>
+            <th>状态</th>  
+            <th>维护人</th> 
+            <th>操作</th>         
+        </tr>
+        {% for sold_device in sold_devices %}
+        <tr data-id="{{sold_device.id}}">
+            <td>{{sold_device.outbound.buyer.name}}</td>
+            <td>{{sold_device.device.equipment.name}}</td>
+            <td>{{sold_device.device.equipment.model}}</td>  
+            <td><input name="fix-address" type="text" value="{{sold_device.fix_address}}"></td>
+            <td>
+                <select name="state">          
+                    <option value="good" {% if sold_device.state == "good" %}selected{%endif%}>良好</option>
+                    <option value="bad" {% if sold_device.state == "bad" %}selected{%endif%}>故障</option>
+                    <option value="maintaining" {% if sold_device.state == "maintaining" %}selected{%endif%}>维修中</option>
+                </select>
+            </td>
+            <td>
+                <select name="maintainer">
+                    {% for maintainer in maintainers %}
+                    <option value="{{maintainer.id}}" {% if sold_device.device.maintainer.id == maintainer.id %}selected{%endif%}>{{maintainer.real_name}}</option>
+                    {%endfor%}
+                </select>
+            </td>
+            <td><button class="btn" onclick="updateSoldDevice(event)">更新</button></td>                 
+        </tr>
+        {% endfor %}
+    </table>
+</div>

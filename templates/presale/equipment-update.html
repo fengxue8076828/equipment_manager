@@ -1,0 +1,44 @@
+{% load static %}
+<div class="content-container">
+    <h1>设备更新</h1>
+    <div class="form-container">
+        <form data-id="{{ equipment_id }}" id="equipment-update-form" onsubmit="updateEquipmentSubmit(event)">
+            {% csrf_token %}
+
+            {% if form.errors %}
+            <div>{{ form.errors }}</div>
+            {% endif %}
+            <div class="field">
+                <label for="{{ form.name.id_for_label }}">设备名称</label>         
+                {{ form.name }}
+            </div> 
+            <div class="field">
+                <label for="{{ form.category.id_for_label }}">设备类别</label>         
+                {{ form.category }}
+            </div> 
+            <div class="field">
+                <label for="{{ form.model.id_for_label }}">型号</label> 
+                {{ form.model }}
+            </div>
+            <div class="field">
+                <label for="{{ form.hardware_serial.id_for_label }}">硬件编号</label> 
+                {{ form.hardware_serial }}
+            </div>
+            <div class="field">
+                <label for="{{ form.software_serial.id_for_label }}">软件编号</label> 
+                {{ form.software_serial }}
+            </div>
+            <div class="field">
+                <label for="{{ form.price.id_for_label }}">价格</label> 
+                {{ form.price }}
+            </div>
+            <button class="btn" type="submit">修改</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+            
