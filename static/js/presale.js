@@ -71,24 +71,18 @@ function inbound(e){
     
 }
 
-function deviceCreateSubmit(e){
+function inboundCreateSubmit(e){
     e.preventDefault()
-    const amount = document.getElementById("amount").value
-    equipment_id=document.getElementById("equipment-select").value
-    if (equipment_id){
-        form=document.getElementById("device-create-form")
-        data=new FormData(form)
-        xhr=new XMLHttpRequest()
-        xhr.open('POST',`presale/device-create/?amount=${amount}`,true)
-        xhr.onload=function(){
-            if (this.status===200){
-                gotoLink('presale/equipment-list/')       
-            }
+    form=document.getElementById("inbound-create-form")
+    data=new FormData(form)
+    xhr=new XMLHttpRequest()
+    xhr.open('POST',`presale/inbound-create/`,true)
+    xhr.onload=function(){
+        if (this.status===200){
+            gotoLink('presale/equipment-list/')       
         }
-        xhr.send(data)   
-    } else {
-        alert("请选择设备！")
-    }  
+    }
+    xhr.send(data)   
 }
 
 function updateEquipment(e){
@@ -188,4 +182,99 @@ function deviceUpdateSubmit(e){
         }
     }
     xhr.send(data)
+}
+
+function searchSupplier(){
+    const supplier = document.querySelector("#supplier-name").value
+    const mainContent=document.getElementById("main-content")
+
+    xhr=new XMLHttpRequest()
+    xhr.open('GET',`presale/supplier-list/?name=${supplier}`,true)
+    xhr.onload=function(){
+        if (this.status===200){
+            const responseText=JSON.parse(this.responseText)
+            content=responseText.content
+            mainContent.innerHTML=content
+        }
+    }
+    xhr.send() 
+}
+
+function supplierCreate(){
+    const mainContent=document.getElementById("main-content")
+
+    xhr=new XMLHttpRequest()
+    xhr.open('GET',`presale/supplier-create/`,true)
+    xhr.onload=function(){
+        if (this.status===200){
+            const responseText=JSON.parse(this.responseText)
+            content=responseText.content
+            mainContent.innerHTML=content
+        }
+    }
+    xhr.send() 
+}
+function supplierCreateSubmit(e){
+    e.preventDefault()
+    form=document.getElementById("supplier-create-form")
+    data=new FormData(form)
+    xhr=new XMLHttpRequest()
+    xhr.open('POST',`presale/supplier-create/`,true)
+    xhr.onload=function(){
+        if (this.status===200){
+            alert("添加成功！")
+            gotoLink('presale/supplier-list/')       
+        }
+    }
+    xhr.send(data)   
+}
+function supplierUpdate(e){
+    const mainContent=document.getElementById("main-content")
+    const supplierId = e.target.closest("tr").dataset.id
+    xhr=new XMLHttpRequest()
+    xhr.open('GET',`presale/supplier-update/${supplierId}/`,true)
+    xhr.onload=function(){
+        if (this.status===200){
+            const responseText=JSON.parse(this.responseText)
+            content=responseText.content
+            mainContent.innerHTML=content
+        }
+    }
+    xhr.send()    
+}
+function supplierUpdateSubmit(e){
+    e.preventDefault()
+    const supplierId = e.target.dataset.id
+    data=new FormData(e.target)
+    xhr=new XMLHttpRequest()
+    xhr.open('POST',`presale/supplier-update/${supplierId}/`,true)
+    xhr.onload=function(){
+        if (this.status===200){
+            const res=JSON.parse(this.responseText)
+            alert("更新成功")
+            gotoLink('presale/supplier-list/')  
+        }
+    }
+    xhr.send(data)
+}
+
+function supplierDelete(e){
+    if (confirm("确实要删除该供货商吗？")){
+        const supplierId = e.target.closest("tr").dataset.id
+        const mainContent=document.getElementById("main-content")
+        const xhr=new XMLHttpRequest()
+        xhr.open('POST',`presale/supplier-delete/${supplierId}`,true)
+        xhr.onload=function(){
+            if (this.status===200){
+                const res=JSON.parse(this.responseText)
+                if(res.message == "not-empty"){
+                    alert("还有该供货商的设备，不能删除！")
+                }else {
+                    alert("删除成功！")
+                    gotoLink('presale/supplier-list/')  
+                }
+            }
+        }
+        xhr.send()  
+    }    
 }

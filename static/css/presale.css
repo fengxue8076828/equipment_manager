@@ -37,3 +37,14 @@
     align-items: center;
     gap:20px;
 }
+
+#supplier-operations {
+    display: flex;
+    justify-content: flex-start;
+}
+#supplier-operations *{
+    margin-right: 20px;
+}
+#supplier-operations input {
+    width: 20%;
+}

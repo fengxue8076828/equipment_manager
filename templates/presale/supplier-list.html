@@ -1,0 +1,30 @@
+<div class="content-container">
+    <h1>供货商管理</h1>
+    <div class="operations" id="supplier-operations">   
+        <input type="text" id="supplier-name" name="supplier-name" placeholder="供货商名称" value="{{name}}">
+        <button class="btn" onclick="searchSupplier()">查询</button>
+        <button class="btn" onclick="supplierCreate()">添加新供货商</button>
+        
+    </div>
+    <table>
+        <tr>
+            <th>名称</th>
+            <th>电话</th>
+            <th>邮箱</th>
+            <th>地址</th>
+            <th>备注</th>
+            <th>操作</th>
+
+        </tr>
+        {% for supplier in suppliers %}
+        <tr data-id="{{supplier.id}}">
+            <td>{{supplier.name}}</td>
+            <td>{{supplier.telephone}}</td>
+            <td>{{supplier.email}}</td>
+            <td>{{supplier.address}}</td>
+            <td>{{supplier.memo}}</td>
+            <td><button class="btn" onclick="supplierUpdate(event)">修改</button><button class="btn" onclick="supplierDelete(event)">删除</button></td>      
+        </tr>
+        {% endfor %}
+    </table>
+</div>

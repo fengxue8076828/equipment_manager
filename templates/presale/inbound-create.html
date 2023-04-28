@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="form-container">
-        <form id="device-create-form" onsubmit="deviceCreateSubmit(event)" enctype="multipart/form-data">
+        <form id="inbound-create-form" onsubmit="inboundCreateSubmit(event)" enctype="multipart/form-data">
             {% csrf_token %}
 
             {% if form.errors %}
@@ -28,7 +28,7 @@
             {% endif %}
 
             <div class="field">
-                <select id="id_equipment" onchange="getEquipment(event)">
+                <select id="id_equipment" name="equipment" onchange="getEquipment(event)">
                     <option value="">请选择设备</option>
                     {% for equipment in equipments %}
                     <option value="{{equipment.id}}">{{equipment.name}}</option>

@@ -1,0 +1,40 @@
+{% load static %}
+<div class="content-container">
+    <h1>添加新供货商</h1>
+    <div class="form-container">
+        <form data-id="{{supplier.id}}" id="supplier-update-form" onsubmit="supplierUpdateSubmit(event)">
+            {% csrf_token %}
+
+            {% if form.errors %}
+            <div>{{ form.errors }}</div>
+            {% endif %}
+            <div class="field">
+                <label for="{{ form.name.id_for_label }}">名称</label>         
+                {{ form.name }}
+            </div> 
+            <div class="field">
+                <label for="{{ form.telephone.id_for_label }}">电话</label>         
+                {{ form.telephone }}
+            </div> 
+            <div class="field">
+                <label for="{{ form.email.id_for_label }}">email</label> 
+                {{ form.email }}
+            </div>
+            <div class="field">
+                <label for="{{ form.address.id_for_label }}">地址</label> 
+                {{ form.address }}
+            </div>
+            <div class="field">
+                <label for="{{ form.memo.id_for_label }}">备注</label> 
+                {{ form.memo }}
+            </div>
+            <button class="btn" type="submit">修改</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+            

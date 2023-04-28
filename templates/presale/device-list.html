@@ -2,6 +2,7 @@
     <h1>"{{ equipment.name }}"库存情况</h1>
     <table>
         <tr>
+            <th>供货商</th>
             <th>仓库</th>
             <th>入库日期</th>
             <th>操作员</th>
@@ -11,9 +12,10 @@
         </tr>
         {% for device in devices %}
         <tr data-id="{{device.id}}">
+            <td>{{device.supplier}}</td>
             <td>{{device.warehouse}}</td>
-            <td>{{device.inbound_date|date:"Y-m-d"}}</td>
-            <td>{{device.operator}}</td>
+            <td>{{device.inbound.inbound_date|date:"Y-m-d"}}</td>
+            <td>{{device.inbound.inbound_operator}}</td>
             <td>{{device.maintainer}}</td>
             <td>{{device.get_state_display}}</td>
             <td><button class="btn" onclick="checkDevice(event)">查看详情或修改状态</button></td>      

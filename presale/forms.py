@@ -1,5 +1,5 @@
 from django import forms
-from .models import Equipment,Device,Inbound
+from .models import Equipment,Device,Inbound,Supplier
 from django.contrib.auth import get_user_model
 from info_manager.models import EquipCategory
 
@@ -37,9 +37,23 @@ class InboundForm(forms.ModelForm):
             'inbound_image',
         ]
 
-class DeviceStateForm(forms.ModelForm):
+class DeviceUpdateForm(forms.ModelForm):
+    maintainer = forms.ModelChoiceField(User.objects.filter(role__id=4))
     class Meta:
         model = Device
         fields = [
-            'state'
+            'state',
+            'maintainer',
+            'warehouse',
+        ]
+
+class SupplierForm(forms.ModelForm):
+    class Meta:
+        model = Supplier
+        fields = [
+            'name',
+            'telephone',
+            'email',
+            'address',
+            'memo',
         ]

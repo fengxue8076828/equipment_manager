@@ -30,9 +30,9 @@ class OutBound(models.Model):
         ('paid','已结算'),
         ('unpaid','未结算'),
     ]
-    outbound_number = models.CharField(max_length=100)
+    outbound_number = models.CharField(max_length=100,null=True)
     outbound_operator = models.ForeignKey(User,null=True,blank=True,on_delete=models.SET_NULL,related_name="devices_sold")
-    outbound_date = models.DateField()
+    outbound_date = models.DateField(null=True)
     outbound_image = models.ImageField(upload_to="outbound-images/")
     buyer =  models.ForeignKey(Client,null=True,blank=True,on_delete=models.SET_NULL,related_name="devices_bought")
     pay_state = models.CharField(max_length=30,choices=pay_state_choices)

@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import UpdateView,DeleteView,DetailView
-from .forms import EquipmentForm,InboundForm,DeviceStateForm
-from .models import Equipment,Device,Inbound
+from .forms import EquipmentForm,InboundForm,DeviceUpdateForm,SupplierForm
+from .models import Equipment,Device,Inbound,Supplier
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from info_manager.models import EquipCategory,Warehouse
@@ -33,12 +33,15 @@ class InboundCreateView(View):
 
         form = InboundForm(self.request.POST,self.request.FILES)
         if form.is_valid():
+            # inbound = form.save(commit=False)
+            
+            # inbound.inbound_number=f'No.{timezone.now().date()}-{today_inbound+1}'
+            # inbound.inbound_operator = self.request.user
+            # inbound.date = timezone.now().date()
+            # inbound.save()
 
-            inbound = form.save(commit=False)
             today_inbound = Inbound.objects.filter(inbound_date=timezone.now().date()).count()
-            inbound.inbound_number=f'No.{timezone.now().date()}-{today_inbound+1}'
-            inbound.inbound_operator = self.request.user
-            inbound.date = timezone.now().date()
+            inbound = Inbound.objects.create(inbound_number=f'No.{timezone.now().date()}-{today_inbound+1}',inbound_operator=self.request.user,inbound_date=timezone.now().date(),**form.cleaned_data)
             inbound.save()
 
             for i in range(0,inbound.amount):
@@ -117,19 +120,74 @@ class EquipmentDeviceUpdateView(View):
     def get(self,request,*args,**kwargs):
         device_id=self.kwargs["device_id"]
         device = Device.objects.get(id=device_id)
-        form = DeviceStateForm(instance=device)
+        form = DeviceUpdateForm(instance=device)
         context = {"device":device,"form":form}
         content = render_to_string("presale/device-update.html",context=context,request=request)
         return JsonResponse({"content":content},status=200)
     def post(self,request,*args,**kwargs):
         device_id=self.kwargs["device_id"]
         device = Device.objects.get(id=device_id)
-        form = DeviceStateForm(self.request.POST,instance=device)
+        form = DeviceUpdateForm(self.request.POST,instance=device)
         if form.is_valid():
             form.save()
             return JsonResponse({"message":"success"},status=200)
         return JsonResponse({"message":"failed"},status=200)
          
+class SupplierListView(View):
+    def get(self,request,*args,**kwargs):
+        suppliers = Supplier.objects.all()
+        context = {}
+        if("name" in self.request.GET and self.request.GET.get("name")):
+            name = self.request.GET.get("name")
+            suppliers = suppliers.filter(name__contains=name)
+            context.update({"name":name})
+    
+        context.update({"suppliers":suppliers})
+        content = render_to_string("presale/supplier-list.html",context=context,request=request)
+        return JsonResponse({"content":content},status=200)
+
+class SupplierCreateView(View):
+    def get(self,request,*args,**kwargs):
+        form = SupplierForm()
+        context = {"form":form}
+        content = render_to_string("presale/supplier-create.html",context=context,request=request)
+        return JsonResponse({"content":content},status=200)
+    
+    def post(self,requset,*args,**kwargs):
+        form = SupplierForm(self.request.POST)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({"message":"success"},status=200)
+        return JsonResponse({"message":"fail"},status=200)
+
+class SupplierUpdateView(View):
+    def get(self,request,*args,**kwargs):
+        supplier_id=self.kwargs["supplier_id"]
+        supplier = Supplier.objects.get(id=supplier_id)
+        form = SupplierForm(instance=supplier)
+        context = {"form":form,"supplier":supplier}
+        content = render_to_string("presale/supplier-update.html",context=context,request=request)
+        return JsonResponse({"content":content},status=200)
+         
+    def post(self,request,*args,**kwargs):
+        supplier_id=self.kwargs["supplier_id"]
+        supplier = Supplier.objects.get(id=supplier_id)
+        form = SupplierForm(self.request.POST,instance=supplier)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({"message":"success"},status=200)
+        return JsonResponse({"message":"failed"},status=200)
+
+@method_decorator(csrf_exempt, name='dispatch')
+class SupplierDeleteView(DeleteView):
+    queryset=Supplier.objects.all()
+    def post(self,request,*args,**kwargs):
+        instance = self.get_object()
+        if (instance.device_set.count()>0):
+            return JsonResponse({"message":"not-empty"})
+        else:
+            instance.delete()
+            return JsonResponse({"message":"success"})
 
 class EquipDeviceInboundPDFView(View):
     def get(self,request,*args,**kwargs):

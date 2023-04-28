@@ -13,7 +13,7 @@ class Supplier(models.Model):
     telephone = models.CharField(max_length=200)
     email = models.CharField(max_length=200,null=True,blank=True)
     address = models.CharField(max_length=300)
-    memo = models.CharField(max_length=1000)
+    memo = models.CharField(max_length=1000,null=True)
 
     def __str__(self):
         return self.name
