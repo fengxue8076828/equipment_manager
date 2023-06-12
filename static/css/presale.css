@@ -15,6 +15,7 @@
     border-radius: 10px;
     margin-bottom: 20px;
     color: darkgray;
+    padding-left: 0;
 }
 #equipment-container .row,
 #device-container .row {

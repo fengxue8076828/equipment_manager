@@ -1,0 +1,30 @@
+<div class="content-container">
+    <h1>客户管理</h1>
+    <div class="operations" id="client-operations">   
+        <input type="text" id="client-name" name="client-name" placeholder="客户名称" value="{{name}}">
+        <button class="btn" onclick="searchClient()">查询</button>
+        <button class="btn" onclick="clientCreate()">添加新客户</button>
+        
+    </div>
+    <table>
+        <tr>
+            <th>名称</th>
+            <th>电话</th>
+            <th>邮箱</th>
+            <th>地址</th>
+            <th>备注</th>
+            <th>操作</th>
+
+        </tr>
+        {% for client in clients %}
+        <tr data-id="{{client.id}}">
+            <td>{{client.name}}</td>
+            <td>{{client.telephone}}</td>
+            <td>{{client.email}}</td>
+            <td>{{client.address}}</td>
+            <td>{{client.memo}}</td>
+            <td><button class="btn" onclick="clientUpdate(event)">修改</button><button class="btn" onclick="clientDelete(event)">删除</button></td>      
+        </tr>
+        {% endfor %}
+    </table>
+</div>

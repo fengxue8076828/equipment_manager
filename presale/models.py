@@ -51,9 +51,6 @@ class Device(models.Model):
         ("ready_good","可发货(中)"), 
         ("ready","可发货"),
         ("ready_confirm","可发货，需确认"),
-        ("under_maintain","检修中"),
-        ("ordered","已订货"),
-        ("sold","已售出"),    
     ]
     supplier = models.ForeignKey(Supplier,null=True,on_delete=models.SET_NULL)
     maintainer = models.ForeignKey(User,null=True,blank=True,on_delete=models.SET_NULL,related_name="maintain_devices")
@@ -61,6 +58,7 @@ class Device(models.Model):
     warehouse=models.ForeignKey(Warehouse,null=True,blank=True,on_delete=models.SET_NULL,related_name="devices")
     state = models.CharField(max_length=100,choices=state_choices)
     inbound=models.ForeignKey(Inbound,null=True,on_delete=models.SET_NULL)
+    is_sold = models.BooleanField(default=False,null=True)
 
 
     class Meta:

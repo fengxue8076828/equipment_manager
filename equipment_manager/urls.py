@@ -31,4 +31,5 @@ urlpatterns = [
     path('info-manager/',include("info_manager.urls",namespace="info_manager")),
     path('presale/',include("presale.urls",namespace="presale")),
     path('postsale/',include("postsale.urls",namespace="postsale")),
+    path('maintainance/',include("maintainance.urls",namespace="maintainance"))
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

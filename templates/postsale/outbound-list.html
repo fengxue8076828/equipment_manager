@@ -1,40 +1,56 @@
 <div class="content-container">
-    <h1>结算管理</h1>
-    <div class="operations" id="outbound-operation">
-        <input type="date" id="begin-date" name="begin-date" value="{{begin_date|date:"Y-m-d"}}">
-        <input type="date" id="end-date" name="end-date" value="{{end_date|date:"Y-m-d"}}">
-        <select name="pay_state" id="pay-state">
-            <option value="">全部</option>
-            {% if pay_state == "paid" %}
-            <option value="paid" selected>已结算</option>
-            <option value="unpaid">未结算</option>
-            {% else %}
-            <option value="paid">已结算</option>
-            <option value="unpaid" selected>未结算</option>
-            {% endif %}
-        </select>
-        <button class="btn" onclick="outboundList()">查询</button>
-    </div>
-    <table>
-        <tr>
-            <th>出库单号</th>
-            <th>出库日期</th>
-            <th>出库人</th>
-            <th>客户名称</th>
-            <th>结算状态</th>
-            <th>结算日期</th>
-            <th>操作</th>
-        </tr>
-        {% for outbound in outbounds %}
-        <tr>
-            <td>{{outbound.outbound_number}}</td>
-            <td>{{outbound.outbound_date|date:"Y-m-d"}}</td>
-            <td>{{outbound.outbound_operator}}</td>
-            <td>{{outbound.buyer}}</td>
-            <td>{{outbound.get_pay_state_display}}</td>
-            <td>{{outbound.pay_date|date:"Y-m-d"}}</td>   
-            <td><button data-id="{{outbound.id}}" class="btn" onclick="">出库单</button><button data-id="{{outbound.id}}" class="btn" onclick="soldDeviceList(event)">设备仪器</button></td>      
-        </tr>
-        {% endfor %}
-    </table>
+  <h1>出库单查询</h1>
+  <div class="operations" id="outbound-operation">
+    <input type="date" id="begin-date" name="begin-date"
+    value="{{begin_date|date:"Y-m-d"}}"> <input type="date" id="end-date"
+    name="end-date" value="{{end_date|date:"Y-m-d"}}">
+    <select name="pay_state" id="pay-state">
+      <option value="">全部</option>
+      {% if pay_state == "paid" %}
+      <option value="paid" selected>已结算</option>
+      <option value="unpaid">未结算</option>
+      {% else %}
+      <option value="paid">已结算</option>
+      <option value="unpaid" selected>未结算</option>
+      {% endif %}
+    </select>
+    <button class="btn" onclick="outboundList()">查询</button>
+  </div>
+  <table>
+    <tr>
+      <th>出库单号</th>
+      <th>出库日期</th>
+      <th>出库人</th>
+      <th>客户名称</th>
+      <th>结算状态</th>
+      <th>结算日期</th>
+      <th>操作</th>
+    </tr>
+    {% for outbound in outbounds %}
+    <tr>
+      <td>{{outbound.outbound_number}}</td>
+      <td>{{outbound.outbound_date|date:"Y-m-d"}}</td>
+      <td>{{outbound.outbound_operator}}</td>
+      <td>{{outbound.buyer}}</td>
+      <td>{{outbound.get_pay_state_display}}</td>
+      <td>{{outbound.pay_date|date:"Y-m-d"}}</td>
+      <td>
+        <button data-id="{{outbound.id}}" class="btn">
+          <a
+            href="{{ outbound.outbound_image.url }}"
+            target="_blank"
+            style="text-decoration: none"
+            >出库单</a
+          ></button
+        ><button
+          data-id="{{outbound.id}}"
+          class="btn"
+          onclick="soldDeviceList(event)"
+        >
+          设备仪器
+        </button>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
 </div>

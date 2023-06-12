@@ -13,11 +13,11 @@
         </tr>
         {% for warehouse in warehouses %}
         <tr data-id="{{warehouse.id}}">
-            <td><input type="text" name="number" value="{{warehouse.number}}"  readonly="false" ondblclick="enableEdit(event)" onmouseleave="disableEdit(event)"></td>
+            <td><input type="text" name="number" value="{{warehouse.number}}"  readonly="false" ondblclick="enableEdit(event)" onmouseleave="disableEdit(event)" style="width: 70px;"></td>
             <td><input type="text" name="name" value="{{warehouse.name}}"  readonly="false" ondblclick="enableEdit(event)" onmouseleave="disableEdit(event)"></td>
             <td><input type="text" name="location" value="{{warehouse.location}}" readonly="false" ondblclick="enableEdit(event)" onmouseleave="disableEdit(event)"></td>
             <td><input type="text" name="description" value="{{warehouse.description}}" readonly="false" ondblclick="enableEdit(event)" onmouseleave="disableEdit(event)"></td> 
-            <td><button class="btn" onclick="updateWarehouse(event)">修改</button><button class="btn" onclick="deleteWarehouse(event)">删除</button></td>      
+            <td><button class="btn" onclick="updateWarehouse(event)">修改</button><button class="btn" onclick="deleteWarehouse(event)">删除</button><button class="btn" onclick="deviceListByWarehouse(event)">设备</button></td>      
         </tr>
         {% endfor %}
     </table>

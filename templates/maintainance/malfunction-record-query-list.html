@@ -1,0 +1,98 @@
+<div class="content-container">
+    <input type="hidden" id="back-url" value="{{ back_url }}">
+    <h1>故障记录查询</h1>
+    <div class="operations" id="sold-device-operation">
+        <input type="number" id="device-id" name="device-id" placeholder="设备ID" value="{{device_id}}" style="width: 10%;">
+        <input type="text" id="equipment-name" name="equipment-name" placeholder="设备名称" value="{{equipment_name}}" style="width: 15%;">
+        <input type="date" id="begin-date" name="begin-date" value="{{begin_date|date:"Y-m-d"}}" style="width:17%"> 
+        <input type="date" id="end-date" name="end-date" value="{{end_date|date:"Y-m-d"}}" style="width:17%">
+        <select id="state" style="width: 10%;">
+          <option value="">状态</option>
+          <option value="assigned" {% if state == 'assigned' %}selected{% endif %}>已分配</option>
+          <option value="started" {% if state == 'started' %}selected{% endif %}>已开始检修</option>
+          <option value="finished" {% if state == 'finished' %}selected{% endif %}>已完成</option>
+        </select>
+        {% if request.user.role.id == 4%}
+        <select name="maintainer-id" id="maintainer-id" disabled>
+          <option value="">维护人</option>
+          {% for maintainer in maintainers %}
+          {% if maintainer.id == request.user.id %}
+          <option value="{{maintainer.id}}" selected>{{maintainer.real_name}}</option>
+          {% else %}
+          <option value="{{maintainer.id}}">{{maintainer.real_name}}</option>
+          {% endif %}
+          {% endfor%}
+        </select>
+        {% else %}
+        <select name="maintainer-id" id="maintainer-id">
+          <option value="">维护人</option>
+          {% for maintainer in maintainers %}
+          {% if maintainer.id == maintainer_id %}
+          <option value="{{maintainer.id}}" selected>{{maintainer.real_name}}</option>
+          {% else %}
+          <option value="{{maintainer.id}}">{{maintainer.real_name}}</option>
+          {% endif %}
+          {% endfor%}
+        </select>
+        {% endif %}
+        
+        <button class="btn" onclick="searchMalfunctionRecord(event)">查询</button>
+    </div>
+    <table>
+        <tr>
+            <th>设备ID</th>
+            <th>设备名称</th>
+            <th>故障标题</th>           
+            <th>故障日期</th> 
+            <th>维护人</th> 
+            <th>状态</th> 
+            <th>操作</th>         
+        </tr>
+        {% for malfunction_record in malfunction_records %}
+        <tr data-id="{{malfunction_record.id}}">
+            <td>{{malfunction_record.device.id}}</td>
+            <td>{{malfunction_record.device.equipment.name}}</td>
+            <td>{{malfunction_record.title}}</td>   
+            <td>{{malfunction_record.dispatch_date|date:"Y-m-d"}}</td>  
+            <td>{{malfunction_record.maintainer.real_name}}</td>
+            <td>{{malfunction_record.get_state_display}}</td>
+            <td><button class="btn" onclick="checkMaintainanceRecordList(event)">查看检修记录</button></td>                 
+        </tr>
+        {% endfor %}
+    </table>
+    <div
+    class="pagination"
+    style="width: 50%; display: flex; justify-content: flex-end"
+  >
+    <span class="current">
+      共 {{ page_obj.number }} 页,当前第 {{ page_obj.paginator.num_pages }} 页.
+    </span>
+    {% if page_obj.has_previous %}
+    <button
+      class="btn"
+      onclick="gotoPage(event,`maintainance/malfunction-record-query-list/?device_id=${document.getElementById('device-id').value}&equipment_name=${document.getElementById('equipment-name').value}&begin_date=${document.getElementById('begin-date').value}&end_date=${document.getElementById('end-date').value}&maintainer_id=${document.getElementById('maintainer-id').value}&state=${document.getElementById('state').value}`,'1')"
+    >
+      首页
+    </button>
+    <button
+      class="btn"
+      onclick="gotoPage(event,`maintainance/malfunction-record-query-list/?device_id=${document.getElementById('device-id').value}&equipment_name=${document.getElementById('equipment-name').value}&begin_date=${document.getElementById('begin-date').value}&end_date=${document.getElementById('end-date').value}&maintainer_id=${document.getElementById('maintainer-id').value}&state=${document.getElementById('state').value}`,'{{ page_obj.previous_page_number }}')"
+    >
+      上一页
+    </button>
+    {% endif %} {% if page_obj.has_next %}
+    <button
+      class="btn"
+      onclick="gotoPage(event,`maintainance/malfunction-record-query-list/?device_id=${document.getElementById('device-id').value}&equipment_name=${document.getElementById('equipment-name').value}&begin_date=${document.getElementById('begin-date').value}&end_date=${document.getElementById('end-date').value}&maintainer_id=${document.getElementById('maintainer-id').value}&state=${document.getElementById('state').value}`,'{{ page_obj.next_page_number }}')"
+    >
+      下一页
+    </button>
+    <button
+      class="btn"
+      onclick="gotoPage(event,`maintainance/malfunction-record-query-list/?device_id=${document.getElementById('device-id').value}&equipment_name=${document.getElementById('equipment-name').value}&begin_date=${document.getElementById('begin-date').value}&end_date=${document.getElementById('end-date').value}&maintainer_id=${document.getElementById('maintainer-id').value}&state=${document.getElementById('state').value}`,'{{ page_obj.paginator.num_pages }}')"
+    >
+      尾页
+    </button>
+    {% endif %}
+  </div>
+</div>

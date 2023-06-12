@@ -1,3 +1,6 @@
+from typing import Any, Dict
+from django import http
+from django.db.models.query import QuerySet
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.http.response import JsonResponse
@@ -12,6 +15,7 @@ from django.core import serializers
 from .models import *
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import ListView
 
 # Create your views here.
 
@@ -40,7 +44,6 @@ class UserProfileView(LoginRequiredMixin,View):
         form=UserForm(request.POST,request.FILES,instance=self.request.user)
         if form.is_valid():
             form.save()
-            messages.add_message(self.request,messages.SUCCESS,'更新成功！')
             return JsonResponse({"message":"success"},status=200)
         return JsonResponse({"message":"failed"},status=200)
     
@@ -81,6 +84,7 @@ class UserCreateView(FormView):
         if form.is_valid():
             instance=form.save()
             instance.set_password("123456")
+            instance.is_active = True
             messages.add_message(self.request,messages.SUCCESS,'更新成功！')
             instance.save()
             form=UserCreateForm()
@@ -88,26 +92,46 @@ class UserCreateView(FormView):
         content=render_to_string("info-manager/user-create.html",context=context,request=self.request)
         return JsonResponse({"content":content},status=200)
     
-class UserListView(View):
-    def get(self,request,*args,**kwargs):
-        roles=Role.objects.all()
-        if kwargs['role_id']=='-1':
-            users=User.objects.all()
+class UserListView(ListView):
+    model = User
+    context_object_name = "users"
+    paginate_by = 10 
+
+    def get_queryset(self):
+        self.roles = Role.objects.all()
+        if self.kwargs['role_id']=='-1':
+            queryset=User.objects.filter(is_active=True)
         else:
-            users=User.objects.filter(role__id=kwargs['role_id'])
-        context={"users":users,"roles":roles,"role_id":int(kwargs['role_id'])}
+            queryset=User.objects.filter(is_active=True).filter(role__id=self.kwargs['role_id'])
+        return queryset
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({"roles":self.roles,"role_id":int(self.kwargs["role_id"])})
+        return context
+    def render_to_response(self, context, **response_kwargs):
         content=render_to_string("info-manager/user-list.html",context=context,request=self.request)
         return JsonResponse({"content":content},status=200)
+
+    # def get(self,request,*args,**kwargs):
+    #     roles=Role.objects.all()
+    #     if kwargs['role_id']=='-1':
+    #         users=User.objects.filter(is_active=True)
+    #     else:
+    #         users=User.objects.filter(is_active=True).filter(role__id=kwargs['role_id'])
+    #     context={"users":users,"roles":roles,"role_id":int(kwargs['role_id'])}
+    #     content=render_to_string("info-manager/user-list.html",context=context,request=self.request)
+    #     return JsonResponse({"content":content},status=200)
     
 class UserDeleteView(View):
     def get(self,request,*args,**kwargs):
         user=User.objects.get(id=kwargs["id"])
-        user.delete()
+        user.is_active = False
+        user.save()
         roles=Role.objects.all()
         if kwargs['role_id']=='-1':
-            users=User.objects.all()
+            users=User.objects.filter(is_active=True)
         else:
-            users=User.objects.filter(role__id=kwargs['role_id'])
+            users=User.objects.filter(is_active=True).filter(role__id=kwargs['role_id'])
         context={"users":users,"roles":roles,"selected_role":kwargs['role_id']}
         content=render_to_string("info-manager/user-list.html",context=context,request=self.request)
         return JsonResponse({"content":content},status=200)
@@ -117,11 +141,16 @@ class RoleListView(View):
         roles=Role.objects.all()
         parent_modules=Module.objects.filter(parent_module=None)
         child_modules=Module.objects.exclude(parent_module=None)
+        if self.request.GET.get("role_id"):
+            role_id = self.request.GET.get("role_id")            
+        else:
+            role_id = request.user.role.id
+        print("*************",role_id)
+        current_parent_modules=Module.objects.filter(parent_module=None).filter(role__id=role_id)
+        current_child_modules=Module.objects.exclude(parent_module=None).filter(role__id=role_id)
 
-        current_parent_modules=Module.objects.filter(parent_module=None).filter(role__id=request.user.role.id)
-        current_child_modules=Module.objects.exclude(parent_module=None).filter(role__id=request.user.role.id)
-
-        context={"roles":roles,"parent_modules":parent_modules,"child_modules":child_modules,"current_parent_modules":current_parent_modules,"current_child_modules":current_child_modules}
+        context={"roles":roles,"parent_modules":parent_modules,"child_modules":child_modules,"current_parent_modules":current_parent_modules,"current_child_modules":current_child_modules,
+        "role_id":int(role_id)}
         content=render_to_string("info-manager/role-list.html",context=context,request=self.request)
         return JsonResponse({"content":content},status=200)
 
@@ -186,10 +215,12 @@ class EquipCategoryDeleteView(DeleteView):
         if form.is_valid():
             instance=self.get_object()
             children = EquipCategory.objects.filter(parent=instance)
+            equipments = instance.equipment_set.all()
             if children:
-                children.delete()
+                return JsonResponse({"message":"has-children"},status=200)
+            if equipments:
+                return JsonResponse({"message":"has-equipments"},status=200)
             instance.delete()
-            messages.add_message(self.request,messages.SUCCESS,'删除成功！')
             return JsonResponse({"message":"success"},status=200)
         return JsonResponse({"message":"fail"},status=200)
     
@@ -256,7 +287,8 @@ class WarehouseDeleteView(DeleteView):
         form = self.get_form()
         if form.is_valid():
             instance=self.get_object()
+            if instance.devices.all():
+                return JsonResponse({"message":"has-devices"},status=200)
             instance.delete()
-            messages.add_message(self.request,messages.SUCCESS,'删除成功！')
             return JsonResponse({"message":"success"},status=200)
         return JsonResponse({"message":"fail"},status=200)

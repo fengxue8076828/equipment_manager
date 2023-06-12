@@ -1,30 +1,68 @@
 <div class="content-container">
-    <h1>设备管理</h1>
-    <div class="operations">
-        <button class="btn" onclick="equipmentCreate()">添加新设备</button>
-    </div>
-    <table>
-        <tr>
-            <th>名称</th>
-            <th>类别</th>
-            <th>型号</th>
-            <th>硬件编号</th>
-            <th>软件编号</th>
-            <th>价格</th>
-            <th>库存数量</th>
-            <th>操作</th>
-        </tr>
-        {% for equipment in equipments %}
-        <tr data-id="{{equipment.id}}">
-            <td>{{equipment.name}}</td>
-            <td>{{equipment.category}}</td>
-            <td>{{equipment.model}}</td>
-            <td>{{equipment.hardware_serial}}</td>
-            <td>{{equipment.software_serial}}</td>
-            <td>{{equipment.price}}</td>
-            <td>{{equipment.devices.count}}</td>
-            <td><button class="btn" onclick="updateEquipment(event)">修改</button><button class="btn" onclick="deleteEquipment(event)">删除</button><button class="btn" onclick="listDevice(event)">查看库存</button></td>      
-        </tr>
-        {% endfor %}
-    </table>
+  <h1>设备品种管理</h1>
+  <div class="operations">
+    <button class="btn" onclick="equipmentCreate()">添加新设备品种</button>
+  </div>
+  <table>
+    <tr>
+      <th>名称</th>
+      <th>类别</th>
+      <th>型号</th>
+      <th>硬件编号</th>
+      <th>软件编号</th>
+      <th>价格</th>
+      <th>出售价格</th>
+      <th>库存数量</th>
+      <th>操作</th>
+    </tr>
+    {% for equipment,amount in equipments_amount %}
+    <tr data-id="{{equipment.id}}">
+      <td>{{equipment.name}}</td>
+      <td>{{equipment.category}}</td>
+      <td>{{equipment.model}}</td>
+      <td>{{equipment.hardware_serial}}</td>
+      <td>{{equipment.software_serial}}</td>
+      <td>{{equipment.price}}</td>
+      <td>{{equipment.sale_price}}</td>
+      <td>{{amount}}</td>
+      <td>
+        <button class="btn" onclick="updateEquipment(event)">修改</button
+        ><button class="btn" onclick="deleteEquipment(event)">删除</button
+        ><button class="btn" onclick="listDevice(event)">查看库存</button>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  <div
+    class="pagination"
+    style="width: 50%; display: flex; justify-content: flex-end"
+  >
+    <span class="current">
+      共 {{ page_obj.number }} 页,当前第 {{ page_obj.paginator.num_pages }} 页.
+    </span>
+    {% if page_obj.has_previous %}
+    <button class="btn" onclick="gotoPage(event,'presale/equipment-list/','1')">
+      首页
+    </button>
+    <button
+      class="btn"
+      onclick="gotoPage(event,'presale/equipment-list/','{{ page_obj.previous_page_number }}')"
+    >
+      上一页
+    </button>
+    {% endif %} {% if page_obj.has_next %}
+    <button
+      class="btn"
+      onclick="gotoPage(event,'presale/equipment-list/','{{ page_obj.next_page_number }}')"
+    >
+      下一页
+    </button>
+    <button
+      class="btn"
+      onclick="gotoPage(event,'presale/equipment-list/','{{ page_obj.paginator.num_pages }}')"
+    >
+      尾页
+    </button>
+    {% endif %}
+  </div>
 </div>

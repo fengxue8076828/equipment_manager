@@ -1,24 +1,79 @@
 <div class="content-container">
-    <h1>选择出库设备</h1>
-    <div class="operations">
-        <button class="btn" onclick="toOutbound()">出库</button>
-    </div>
-    <table>
-        <tr>
-            <th>选择</th>
-            <th>设备名称</th>
-            <th>型号</th>
-            <th>仓库</th>
-            <th>状态</th>          
-        </tr>
-        {% for device in devices %}
-        <tr data-id="{{device.id}}">
-            <td><input type="checkbox" name="select-device" value="{{device.id}}" /></td>
-            <td>{{device.equipment.name}}</td>
-            <td>{{device.equipment.model}}</td>  
-            <td>{{device.warehouse}}</td>
-            <td>{{device.get_state_display}}</td>                 
-        </tr>
-        {% endfor %}
-    </table>
+  <h1>选择出库设备</h1>
+  <input type="hidden" id="selected-device" value="{{selected_device}}" />
+  <div class="operations">
+    <button class="btn" onclick="toOutbound()">出库</button>
+  </div>
+  <table>
+    <tr>
+      <th>选择</th>
+      <th>设备ID</th>
+      <th>设备名称</th>
+      <th>型号</th>
+      <th>仓库</th>
+      <th>状态</th>
+    </tr>
+    {% for device in devices %}
+    <tr data-id="{{device.id}}">
+      <td>
+        {% if device.id|stringformat:"s" in selected_device %}
+        <input
+          type="checkbox"
+          name="select-device"
+          value="{{device.id}}"
+          onchange="toggleDevice(event)"
+          checked
+        />
+        {% else %}
+        <input
+          type="checkbox"
+          name="select-device"
+          value="{{device.id}}"
+          onchange="toggleDevice(event)"
+        />
+        {% endif %}
+      </td>
+      <td>{{device.id}}</td>
+      <td>{{device.equipment.name}}</td>
+      <td>{{device.equipment.model}}</td>
+      <td>{{device.warehouse}}</td>
+      <td>{{device.get_state_display}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <div
+    class="pagination"
+    style="width: 50%; display: flex; justify-content: flex-end"
+  >
+    <span class="current">
+      共 {{ page_obj.number }} 页,当前第 {{ page_obj.paginator.num_pages }} 页.
+    </span>
+    {% if page_obj.has_previous %}
+    <button
+      class="btn"
+      onclick="gotoPage(event,`postsale/device-forsale-list/?selected_device=${document.getElementById('selected-device').value}`,'1')"
+    >
+      首页
+    </button>
+    <button
+      class="btn"
+      onclick="gotoPage(event,`postsale/device-forsale-list/?selected_device=${document.getElementById('selected-device').value}`,'{{ page_obj.previous_page_number }}')"
+    >
+      上一页
+    </button>
+    {% endif %} {% if page_obj.has_next %}
+    <button
+      class="btn"
+      onclick="gotoPage(event,`postsale/device-forsale-list/?selected_device=${document.getElementById('selected-device').value}`,'{{ page_obj.next_page_number }}')"
+    >
+      下一页
+    </button>
+    <button
+      class="btn"
+      onclick="gotoPage(event,`postsale/device-forsale-list/?selected_device=${document.getElementById('selected-device').value}`,'{{ page_obj.paginator.num_pages }}')"
+    >
+      尾页
+    </button>
+    {% endif %}
+  </div>
 </div>

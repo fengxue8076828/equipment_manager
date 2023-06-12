@@ -1,0 +1,32 @@
+{% load static %}
+<div class="content-container">
+    <h1>{{record.device.id}}-{{record.device.name}}-{{record.title}} 添加新检修记录</h1>
+    <input type="hidden" id="malfunctionRecordId" value="{{ record.id }}">
+    <div class="form-container">
+        <form id="malfunction-record-create-form" onsubmit="maintainanceRecordCreateSubmit(event)">
+            {% csrf_token %}
+            {% if form.errors %}
+            <div>{{ form.errors }}</div>
+            {% endif %}
+            <div class="field">
+                <label for="{{ form.title.id_for_label }}">标题</label>         
+                {{ form.title }}
+            </div> 
+            <div class="field">
+                <label for="{{ form.description.id_for_label }}">日志</label>         
+                {{ form.description }}
+            </div> 
+            <div style="margin-bottom:10px;display: flex;flex-direction:row;justify-content:flex-start;align-items: center;">
+                <label for="{{ form.is_finished.id_for_label }}" style="position: relative;top: 0;left: 0;">是否完成</label> 
+                {{ form.is_finished }}
+            </div>
+            <button class="btn" type="submit">添加</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+            

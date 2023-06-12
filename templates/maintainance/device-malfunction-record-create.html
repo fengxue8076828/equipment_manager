@@ -1,0 +1,33 @@
+{% load static %}
+<div class="content-container">
+  <h1>分配检修</h1>
+  <div id="device-container" style="width:60%">
+    <div class="row">
+      <h5>设备ID：</h5>
+      <h5 id="device-id">{{device.id}}</h5>
+    </div>
+    <div class="row">
+      <h5>设备名称：</h5>
+      <h5 id="name">{{device.equipment.name}}</h5>
+    </div>
+  </div>
+  <div class="form-container">
+    <form
+      id="device-malfunction-record-create-form"
+      onsubmit="dispatchDeviceSubmit(event)"
+    >
+      {% csrf_token %} {% if form.errors %}
+      <div>{{ form.errors }}</div>
+      {% endif %}
+      <div class="field">
+        <label for="{{ form.title.id_for_label }}">故障标题</label>
+        {{ form.title }}
+      </div>
+      <div class="field">
+        <label for="{{ form.description.id_for_label }}">故障描述</label>
+        {{ form.description }}
+      </div>
+      <button class="btn" type="submit">添加</button>
+    </form>
+  </div>
+</div>

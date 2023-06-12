@@ -1,66 +1,76 @@
 {% load static %}
 <div class="content-container">
-    <h1>设备仪器详情</h1>
-    <div class="form-container">
-        <form data-id="{{ device.id }}" id="device-update-form" onsubmit="deviceUpdateSubmit(event)">
-            {% csrf_token %}
-            <div class="field">
-                <label for="{{ form.state.id_for_label }}">状态</label>         
-                {{ form.state }}
-            </div> 
-            <div class="field">
-                <label for="{{ form.maintainer.id_for_label }}">维护人</label>         
-                {{ form.maintainer }}
-            </div>
-            <div class="field">
-                <label for="{{ form.warehouse.id_for_label }}">仓库</label>         
-                {{ form.warehouse }}
-            </div>  
-            <button class="btn" type="submit">修改</button>
-        </form>
+  <h1>设备仪器详情</h1>
+  <input type="hidden" value="{{back_url}}" id="back-url" />
+
+  <div class="form-container" style="width: 80%">
+    <button class="btn" onclick="goBack()">返回</button>
+    {% if device.state == 'bad' %}
+    <h2>该设备处于故障状态，不能修改</h2>
+    {% elif device.state == 'maintaining'%}
+    <h2>该设备正在检修，不能修改</h2>
+    {% else %}
+    <form
+      data-id="{{ device.id }}"
+      id="device-update-form"
+      onsubmit="deviceUpdateSubmit(event)"
+    >
+      {% csrf_token %}
+      <div class="field">
+        <label for="{{ form.state.id_for_label }}">状态</label>
+        {{ form.state }}
+      </div>
+      <div class="field">
+        <label for="{{ form.maintainer.id_for_label }}">维护人</label>
+        {{ form.maintainer }}
+      </div>
+      <div class="field">
+        <label for="{{ form.warehouse.id_for_label }}">仓库</label>
+        {{ form.warehouse }}
+      </div>
+      <button class="btn" type="submit">修改</button>
+    </form>
+    {% endif %}
+  </div>
+  <div id="device-container">
+    <div class="row">
+      <h5>设备ID：</h5>
+      <h5>{{ device.id }}</h5>
     </div>
-    <div id="device-container">
-        <div class="row">
-            <h5>设备名：</h5>
-            <h5>{{ device.equipment.name }}</h5>
-        </div>
-        <div class="row">
-            <h5>设备型号：</h5>
-            <h5>{{ device.equipment.model }}</h5>
-        </div>
-        <div class="row">
-            <h5>硬件编号：</h5>
-            <h5>{{ device.equipment.hardware_serial }}</h5>
-        </div>
-        <div class="row">
-            <h5>软件编号：</h5>
-            <h5>{{ device.equipment.software_serial }}</h5>
-        </div>
-        <div class="row">
-            <h5>仓库：</h5>
-            <h5>{{ device.warehouse }}</h5>
-        </div>
-        <div class="row">
-            <h5>操作员：</h5>
-            <h5>{{ device.inbound.inbound_operator }}</h5>
-        </div>
-        <div class="row">
-            <h5>入库时间：</h5>
-            <h5>{{ device.inbound.inbound_date|date:"Y-m-d" }}</h5>
-        </div>
-        <div class="row">
-            <h5>维护人：</h5>
-            <h5>{{ device.maintainer }}</h5>
-        </div>
-        <div class="row">
-            <img class="inbound-image" src="{{ device.inbound.inbound_image.url }}" />
-        </div>
+    <div class="row">
+      <h5>设备名：</h5>
+      <h5>{{ device.equipment.name }}</h5>
     </div>
-    
+    <div class="row">
+      <h5>设备型号：</h5>
+      <h5>{{ device.equipment.model }}</h5>
+    </div>
+    <div class="row">
+      <h5>硬件编号：</h5>
+      <h5>{{ device.equipment.hardware_serial }}</h5>
+    </div>
+    <div class="row">
+      <h5>软件编号：</h5>
+      <h5>{{ device.equipment.software_serial }}</h5>
+    </div>
+    <div class="row">
+      <h5>仓库：</h5>
+      <h5>{{ device.warehouse }}</h5>
+    </div>
+    <div class="row">
+      <h5>操作员：</h5>
+      <h5>{{ device.inbound.inbound_operator }}</h5>
+    </div>
+    <div class="row">
+      <h5>入库时间：</h5>
+      <h5>{{ device.inbound.inbound_date|date:"Y-m-d" }}</h5>
+    </div>
+    <div class="row">
+      <h5>维护人：</h5>
+      <h5>{{ device.maintainer.real_name }}</h5>
+    </div>
+    <div class="row">
+      <img class="inbound-image" src="{{ device.inbound.inbound_image.url }}" />
+    </div>
+  </div>
 </div>
-
-
-
-
-
-            

@@ -1,8 +1,13 @@
 <div class="content-container">
     <h1>查看出库单设备列表</h1>
+    <input type="hidden" id="outbound-id" value="{{outbound_id}}">
+    <div class="operations">
+        <button class="btn" onclick="backToOutboundList()">返回</button>
+      </div>
     <table>
         <tr>
             <th>出库单号</th>
+            <th>设备ID</th>
             <th>设备名称</th>
             <th>型号</th>
             <th>安装位置</th>
@@ -11,11 +16,47 @@
         {% for sold_device in sold_devices %}
         <tr">
             <td>{{sold_device.outbound.outbound_number}}</td>
+            <td>{{sold_device.device.id}}</td>
             <td>{{sold_device.device.equipment.name}}</td>
             <td>{{sold_device.device.equipment.model}}</td>  
             <td>{{sold_device.fix_address}}</td>
-            <td>{{sold_device.state}}</td>                 
+            <td>{{sold_device.get_state_display}}</td>                 
         </tr>
         {% endfor %}
     </table>
+    <div
+    class="pagination"
+    style="width: 50%; display: flex; justify-content: flex-end"
+  >
+    <span class="current">
+      共 {{ page_obj.number }} 页,当前第 {{ page_obj.paginator.num_pages }} 页.
+    </span>
+    {% if page_obj.has_previous %}
+    <button
+      class="btn"
+      onclick="gotoPage(event,`postsale/device-sold-list/?outbound_id=${document.getElementById('outbound-id').value}`,'1')"
+    >
+      首页
+    </button>
+    <button
+      class="btn"
+      onclick="gotoPage(event,`postsale/device-sold-list/?outbound_id=${document.getElementById('outbound-id').value}`,'{{ page_obj.previous_page_number }}')"
+    >
+      上一页
+    </button>
+    {% endif %} {% if page_obj.has_next %}
+    <button
+      class="btn"
+      onclick="gotoPage(event,`postsale/device-sold-list/?outbound_id=${document.getElementById('outbound-id').value}`,'{{ page_obj.next_page_number }}')"
+    >
+      下一页
+    </button>
+    <button
+      class="btn"
+      onclick="gotoPage(event,`postsale/device-sold-list/?outbound_id=${document.getElementById('outbound-id').value}`,'{{ page_obj.paginator.num_pages }}')"
+    >
+      尾页
+    </button>
+    {% endif %}
+  </div>
 </div>

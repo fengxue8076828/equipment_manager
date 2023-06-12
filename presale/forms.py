@@ -16,6 +16,7 @@ class EquipmentForm(forms.ModelForm):
             'hardware_serial',
             'software_serial',
             'price',
+            'sale_price',
         ]
 class DeviceForm(forms.ModelForm):
     maintainer = forms.ModelChoiceField(User.objects.filter(role__id=4))

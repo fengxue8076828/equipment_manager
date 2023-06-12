@@ -1,52 +1,89 @@
-{% load static %}
-{% with menuUrl=my_value %}
-{% endwith %}
+{% load static %} {% with menuUrl=my_value %} {% endwith %}
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/main-panel.css'%}">
-    <link rel="stylesheet" href="{% static 'css/userprofile.css' %}" type="text/css" />
-    <link rel="stylesheet" href="{% static 'css/info-manager.css'%}" type="text/css" />
-    <link rel="stylesheet" href="{% static 'css/presale.css'%}" type="text/css" />
-    <link rel="stylesheet" href="{% static 'css/postsale.css'%}" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/main-panel.css'%}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/userprofile.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/info-manager.css'%}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/presale.css'%}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/postsale.css'%}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/maintainance.css'%}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+      integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <main class="main">
-        <div class="menu">
-            <div class="menu-info">
-                <img class="logo" src="{% static 'logo/logo-color.png'%}">
-                <div class="info">
-                    <img id="photo" class="photo" src="{{ request.user.photo.url }}">
-                    <div class="title">
-                        <h5 id="role">{{ request.user.role }}</h5>
-                        <h3 id="real-name">{{ request.user.real_name }}</h3>
-                    </div>
-                    <div class="separator">
-                    </div>
-                    <div class="contact">
-                        <h5 id="email">{{ request.user.email }}</h5>
-                        <h5 id="cellphone-number">{{ request.user.cellphone_number }}</h5>
-                    </div>
-                </div>
+      <div class="menu">
+        <div class="menu-info">
+          <img class="logo" src="{% static 'logo/logo-color.png'%}" />
+          <div class="info">
+            <div class="photo" style="overflow: hidden">
+              {% if request.user.photo %}
+              <img
+                id="photo"
+                style="width: 100%; cursor: pointer"
+                src="{{ request.user.photo.url }}"
+              />
+              {% else %}
+              <img
+                id="photo"
+                style="width: 100%; cursor: pointer"
+                src="{% static 'logo/default-photo.jpg'%}"
+              />
+              {% endif %}
             </div>
-            <div class="menu-items" id="menu-items">
+
+            <div class="title">
+              <h5 id="role">{{ request.user.role }}</h5>
+              <h3 id="real-name">{{ request.user.real_name }}</h3>
             </div>
-            <a href="{% url 'logout' %}" class="btn-logout">logout</a>
+            <div class="separator"></div>
+            <div class="contact">
+              <h5 id="email">{{ request.user.email }}</h5>
+              <h5 id="cellphone-number">{{ request.user.cellphone_number }}</h5>
+            </div>
+          </div>
         </div>
-        <div id="main-content" class="main-content">
-            
-        </div>
+        <div class="menu-items" id="menu-items"></div>
+        <a href="{% url 'logout' %}" class="btn-logout">登出</a>
+      </div>
+      <div id="main-content" class="main-content"></div>
     </main>
     <script src="{% static 'js/menu.js'%}"></script>
     <script src="{% static 'js/userprofile.js' %}"></script>
     <script src="{% static 'js/info-manager.js' %}"></script>
     <script src="{% static 'js/presale.js' %}"></script>
     <script src="{% static 'js/postsale.js' %}"></script>
-</body>
+    <script src="{% static 'js/maintainance.js' %}"></script>
+  </body>
 </html>

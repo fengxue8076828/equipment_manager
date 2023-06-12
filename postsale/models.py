@@ -7,20 +7,12 @@ from django.utils import timezone
 User = get_user_model()
 
 class Client(models.Model):
-    
-    pay_method_choices = [
-        ('instant_pay','立即结算'),
-        ('month_pay','按月结算'),
-        ('season_pay','按季度结算'),
-        ('year_pay','按年结算'),
-    ]
 
     name = models.CharField(max_length=200)
     telephone = models.CharField(max_length=200)
     email = models.CharField(max_length=200,null=True,blank=True)
     address = models.CharField(max_length=300)
     memo = models.CharField(max_length=1000)
-    pay_method = models.CharField(max_length=30,choices=pay_method_choices)
 
     def __str__(self):
         return self.name
@@ -45,15 +37,13 @@ class OutBound(models.Model):
 class DeviceSold(models.Model):
 
     state_choices = [
-        ("good","正常"),
-        ("bad","故障"),
-        ("maintaining","检修中")
+         ("good","正常")
     ]
 
-    device = models.OneToOneField(Device,on_delete=models.CASCADE)
+    device = models.OneToOneField(Device,on_delete=models.CASCADE,related_name="device_sold")
     outbound = models.ForeignKey(OutBound,null=True,on_delete=models.CASCADE)
     fix_address = models.CharField(max_length=200,null=True,blank=True)
-    state = models.CharField(max_length=30,choices=state_choices,null=True)
+    state = models.CharField(max_length=30,null=True,choices=state_choices)
 
     def __str__(self):
         return self.device.equipment.name

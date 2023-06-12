@@ -13,7 +13,6 @@ class UserForm(forms.ModelForm):
     class Meta:
         model=User
         fields=[
-            'username',
             'real_name',
             'fix_phone_number',
             'cellphone_number',
@@ -32,6 +31,10 @@ class UserCreateForm(forms.ModelForm):
             'email',
             'role'
         ]
+
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        self.fields['username'].error_messages = {"unique":"该用户名已经存在！"}
 
 class EquipCategoryForm(forms.ModelForm):
     parent = forms.ModelChoiceField(

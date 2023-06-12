@@ -2,7 +2,7 @@
     <h1>角色管理</h1>
     <div class="panel">
         <div class="title">
-            <select id="role-list">
+            <select id="role-list" onchange="getRoleModules(event)">
                 {% if role_id %}
                     {% for role in roles %}
                         {% if role_id == role.id %}
@@ -21,7 +21,7 @@
                     {% endfor %}
                 {% endif %}
             </select>
-            <button class="btn">添加新角色</button>
+            <button class="btn" onclick="updateRole()">更新权限</button>
         </div>
         <div class="list-container">
             <ul id="from-list">
@@ -45,6 +45,6 @@
             {% endfor %}
             </ul>
         </div>
-        <button class="btn" onclick="updateRole()">更新权限</button>
+        
     </div>
 </div>

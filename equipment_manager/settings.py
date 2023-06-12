@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'info_manager',
     'presale',
     'postsale',
+    'maintainance',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +139,10 @@ AUTH_USER_MODEL='info_manager.User'
 LOGIN_REDIRECT_URL='main_panel'
 LOGOUT_REDIRECT_URL='login'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+TEMPLATE_CONTEXT_PROCESSORS = 'django.template.context_processors.request'
+
+LOCALE_PATH = (
+    os.path.join(BASE_DIR,'locale'),
+)

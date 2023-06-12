@@ -1,0 +1,61 @@
+<div class="content-container">
+    <h1>结算查询</h1>
+    <h3>逾期未结算出库单</h3>
+    {% if overdued_outbounds %}
+    <table>
+        <tr>
+            <th>出库单号</th>
+            <th>出库日期</th>
+            <th>出库人</th>
+            <th>客户名称</th>
+            <th>结算状态</th>
+            <th>结算日期</th>
+            <th>操作</th>
+        </tr>
+        {% for outbound in overdued_outbounds %}
+        <tr>
+            <td>{{outbound.outbound_number}}</td>
+            <td>{{outbound.outbound_date|date:"Y-m-d"}}</td>
+            <td>{{outbound.outbound_operator}}</td>
+            <td>{{outbound.buyer}}</td>
+            <td>{{outbound.get_pay_state_display}}</td>
+            <td>{{outbound.pay_date|date:"Y-m-d"}}</td>   
+            <td><button data-id="{{outbound.id}}" class="btn"><a href="{{ outbound.outbound_image.url }}" target="_blank" style="text-decoration: none;">出库单</a></button><button data-id="{{outbound.id}}" class="btn" onclick="soldDeviceList(event)">设备仪器</button></td>      
+        </tr>
+        {% endfor %}
+    </table>
+    {%else%}
+        <h4>没有逾期的出库单</h4>
+    {% endif %}
+    <h3 style="margin-top: 50px;">查询结算到期出库单</h3>
+    <div class="operations" id="outbound-pay-operation" style="display: flex;justify-content: flex-start;">
+        <select name="overdue_days" id="overdue_days">
+            <option value="">全部</option>
+            <option value="5">5天</option>
+            <option value="7">7天</option>
+        </select>
+        <button class="btn" style="margin-left:20px;" onclick="getOutboundPayListByDays()">查询</button>
+    </div>
+    <table>
+        <tr>
+            <th>出库单号</th>
+            <th>出库日期</th>
+            <th>出库人</th>
+            <th>客户名称</th>
+            <th>结算状态</th>
+            <th>结算日期</th>
+            <th>操作</th>
+        </tr>
+        {% for outbound in overduing_outbounds %}
+        <tr>
+            <td>{{outbound.outbound_number}}</td>
+            <td>{{outbound.outbound_date|date:"Y-m-d"}}</td>
+            <td>{{outbound.outbound_operator}}</td>
+            <td>{{outbound.buyer}}</td>
+            <td>{{outbound.get_pay_state_display}}</td>
+            <td>{{outbound.pay_date|date:"Y-m-d"}}</td>   
+            <td><button data-id="{{outbound.id}}" class="btn"><a href="{{ outbound.outbound_image.url }}" target="_blank" style="text-decoration: none;">出库单</a></button><button data-id="{{outbound.id}}" class="btn" onclick="soldDeviceList(event)">设备仪器</button></td>      
+        </tr>
+        {% endfor %}
+    </table>
+</div>

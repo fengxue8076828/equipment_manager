@@ -1,0 +1,39 @@
+<div class="content-container">
+    <h1>故障设备检修</h1>
+    {% if malfunction_records %}
+    <table>
+      <tr>
+        <th>设备ID</th>
+        <th>设备名称</th>
+        <th>位置</th>
+        <th>故障描述</th>
+        <th>分配日期</th>
+        <th>操作</th>
+      </tr>
+      {% for record in malfunction_records %}
+      <tr data-id="{{record.id}}">
+        <td>{{record.device.id}}</td>
+        <td>{{record.device.equipment.name}}</td>
+        {% if record.device.is_sold%}
+          <td>{{record.device.device_sold.fix_address}}</td>
+        {% else %}
+          <td>{{record.device.warehouse}}</td>
+        {% endif %}
+        <td>{{record.description}}</td>
+        <td>{{record.dispatch_date|date:"Y-m-d"}}</td>
+        <td>
+          {% if record.state == "assigned" %}
+          <button class="btn" onclick="startMaintainance(event)">开始检修</button>
+          {% elif record.state == "started" %}
+          <button class="btn" onclick="maintainanceRecordCreate(event)">继续检修</button>
+          <button class="btn" onclick="maintainanceRecordList(event)">检修记录</button>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table> 
+    {% else %}
+    <h3>目前没有新的检修任务</h3>
+    {% endif %}
+
+</div>

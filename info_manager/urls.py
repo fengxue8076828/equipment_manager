@@ -4,7 +4,7 @@ from .views import UserCreateView,UserListView,UserDeleteView,RoleListView,RoleU
 app_name="info_manager"
 urlpatterns=[
     path("user-create/",UserCreateView.as_view(),name="user-create"),
-    path("user-list/<role_id>",UserListView.as_view(),name="user-list"),
+    path("user-list/<role_id>/",UserListView.as_view(),name="user-list"),
     path("user-delete/<id>/<role_id>",UserDeleteView.as_view(),name="user-delete"),
     path("reset-password/<id>/",PasswordResetView.as_view(),name="reset-password"),
     path("role-list/",RoleListView.as_view(),name="role-list"),

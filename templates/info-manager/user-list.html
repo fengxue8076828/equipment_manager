@@ -33,4 +33,36 @@
         </tr>
         {% endfor %}
     </table>
+    <div class="pagination" style="width: 50%;display: flex; justify-content: flex-end;">
+        <span class="current">
+          共 {{ page_obj.number }} 页,当前第 {{ page_obj.paginator.num_pages }} 页.
+        </span>
+        {% if page_obj.has_previous %}
+        <button
+          class="btn"
+          onclick="gotoPage(event,`info-manager/user-list/${document.getElementById('roles').value}/`,'1')"
+        >
+          首页
+        </button>
+        <button
+          class="btn"
+          onclick="gotoPage(event,`info-manager/user-list/${document.getElementById('roles').value}/`,'{{ page_obj.previous_page_number }}')"
+        >
+          上一页
+        </button>
+        {% endif %} {% if page_obj.has_next %}
+        <button
+          class="btn"
+          onclick="gotoPage(event,`info-manager/user-list/${document.getElementById('roles').value}/`,'{{ page_obj.next_page_number }}')"
+        >
+          下一页
+        </button>
+        <button
+          class="btn"
+          onclick="gotoPage(event,`info-manager/user-list/${document.getElementById('roles').value}/`,'{{ page_obj.paginator.num_pages }}')"
+        >
+          尾页
+        </button>
+        {% endif %}
+      </div>
 </div>

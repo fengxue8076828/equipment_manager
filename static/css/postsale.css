@@ -26,3 +26,13 @@
     margin-left: auto;
     margin-right: 10px;
 }
+#client-operations {
+    display: flex;
+    justify-content: flex-start;
+}
+#client-operations *{
+    margin-right: 20px;
+}
+#client-operations input {
+    width: 20%;
+}
