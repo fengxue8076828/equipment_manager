@@ -108,9 +108,11 @@ class MalfunctionRecordListView(generic.ListView):
     template_name = "maintainance/malfunction-record-list.html"
 
     def get_queryset(self):
-        queryset = DeviceMalfuntionRecord.objects.filter(
-            device__maintainer=self.request.user
-        ).exclude(state="finished")
+        queryset = (
+            DeviceMalfuntionRecord.objects.filter(device__maintainer=self.request.user)
+            .exclude(state="finished")
+            .order_by("-dispatch_date")
+        )
         return queryset
 
     def render_to_response(self, context, **response_kwargs):
@@ -219,7 +221,7 @@ class MalfunctionRecordListQueryView(generic.ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        queryset = DeviceMalfuntionRecord.objects.all()
+        queryset = DeviceMalfuntionRecord.objects.all().order_by("-dispatch_date")
 
         if self.request.user.role.id == 4:
             queryset = queryset.filter(maintainer=self.request.user)

@@ -93,12 +93,6 @@ class DeviceForSaleListView(ListView):
         )
         return JsonResponse({"content": content}, status=200)
 
-    # def get(self,request,*args,**kwargs):
-    #     devices = Device.objects.filter(state__contains="ready").filter(is_sold=False)
-    #     context = {"devices":devices}
-    #     content = render_to_string("postsale/device-forsale-list.html",context=context,request=request)
-    #     return JsonResponse({"content":content},status=200)
-
 
 class DeviceSoldUpdateView(View):
     def post(self, request, *args, **kwargs):
@@ -212,39 +206,6 @@ class DeviceSoldListView(ListView):
             template = "postsale/device-sold-list.html"
         content = render_to_string(template, context=context, request=self.request)
         return JsonResponse({"content": content}, status=200)
-
-    # def get(self,request,*args,**kwargs):
-    #     sold_devices = DeviceSold.objects.all()
-    #     maintainers = User.objects.filter(role__id=4)
-    #     context={}
-    #     template = "postsale/device-sold-list-outbound.html"
-    #     if("outbound_id" in self.request.GET):
-    #         outbound_id = int(self.request.GET.get("outbound_id"))
-    #         print("***************",outbound_id)
-    #         sold_devices = sold_devices.filter(outbound__id=outbound_id)
-    #     else:
-    #         template = "postsale/device-sold-list.html"
-    #         if "fix_address" in self.request.GET and self.request.GET.get("fix_address"):
-    #             fix_address = self.request.GET.get("fix_address")
-    #             sold_devices = sold_devices.filter(fix_address__contains=fix_address)
-    #             context.update({"fix_address":fix_address})
-    #         if "buyer" in self.request.GET and self.request.GET.get("buyer"):
-    #             buyer = self.request.GET.get("buyer")
-    #             sold_devices = sold_devices.filter(outbound__buyer__name__contains=buyer)
-    #             context.update({"buyer":buyer})
-    #         if "equipment_name" in self.request.GET and self.request.GET.get("equipment_name"):
-    #             equipment_name = self.request.GET.get("equipment_name")
-    #             sold_devices = sold_devices.filter(device__equipment__name__contains=equipment_name)
-    #             context.update({"equipment_name":equipment_name})
-    #         if "state" in self.request.GET and self.request.GET.get("state"):
-    #             state = self.request.GET.get("state")
-    #             sold_devices = sold_devices.filter(state=state)
-    #             context.update({"state":state})
-
-    #     context.update({"sold_devices":sold_devices})
-    #     context.update({"maintainers":maintainers})
-    #     content = render_to_string(template,context=context,request=request)
-    #     return JsonResponse({"content":content},status=200)
 
 
 class OutboundPayListView(View):

@@ -1,0 +1,39 @@
+<div class="content-container">
+    <h1>欢迎回来！{{request.user.role.name}} {{ request.user.real_name }}</h1>
+    <table>
+        <tr>
+            <th>待做事项</th>
+            <th>操作</th>
+        </tr>
+        {% if request.user.role.id == 1 %}
+        <tr>
+            <td>有{{ malfunction_records_count }} 个故障设备在维修</td>
+            <td><button class="btn" onclick="gotoLink('maintainance/malfunction-record-query-list/')">查看</button></td>   
+        </tr>
+        <tr>
+            <td>有{{ overdued_outbounds_count }} 个出货单已经到期，尚未结算</td>
+            <td><button class="btn" onclick="gotoLink('postsale/outbound-pay-list/')">查看</button></td>   
+        </tr>
+        <tr>
+            <td>有{{ low_device_number }} 个设备库存数量低于2台</td>
+            <td><button class="btn" onclick="gotoLink('presale/equipment-list/')">查看</button></td>   
+        </tr>
+        {% elif request.user.role.id == 2 %}
+        <tr>
+            <td>有{{ overdued_outbounds_count }} 个出货单已经到期，尚未结算</td>
+            <td><button class="btn" onclick="gotoLink('postsale/outbound-pay-list/')">查看</button></td>   
+        </tr>
+        {% elif request.user.role.id == 3 %}
+        <tr>
+            <td>有{{ low_device_number }} 个设备库存数量低于2台</td>
+            <td><button class="btn" onclick="gotoLink('presale/equipment-list/')">查看</button></td>   
+        </tr>
+        {% else %}
+        <tr>
+            <td>有{{ malfunction_records_count }} 个故障设备在维修</td>
+            <td><button class="btn" onclick="gotoLink('maintainance/malfunction-record-list/')">查看</button></td>   
+        </tr>
+        {% endif %}
+
+    </table>
+</div>

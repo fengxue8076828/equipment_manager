@@ -41,6 +41,7 @@
             </td>
             <td>
                 <select name="maintainer" disabled>
+                    <option value="">无维护人</option>
                     {% for maintainer in maintainers %}
                     <option value="{{maintainer.id}}" {% if sold_device.device.maintainer.id == maintainer.id %}selected{%endif%}>{{maintainer.real_name}}</option>
                     {%endfor%}

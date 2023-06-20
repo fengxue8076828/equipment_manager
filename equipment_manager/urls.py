@@ -14,22 +14,32 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
-from django.contrib.auth.views import LoginView,LogoutView
-from info_manager.views import MainPanelView,MenuView,CustomedLoginView,UserProfileView,PasswordChangeView
+from django.urls import path, include
+from django.contrib.auth.views import LoginView, LogoutView
+from info_manager.views import (
+    MainPanelView,
+    MenuView,
+    CustomedLoginView,
+    UserProfileView,
+    PasswordChangeView,
+)
 from django.conf import settings
 from django.conf.urls.static import static
+from api.views import ApiLoginView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('login/',CustomedLoginView.as_view(),name="login"), 
-    path('logout/',LogoutView.as_view(),name="logout"), 
-    path('',MainPanelView.as_view(),name="main_panel"), 
-    path('menu/',MenuView.as_view(),name="menu"),
-    path('user-profile/',UserProfileView.as_view(),name="user-profile"),
-    path('user-password/',PasswordChangeView.as_view(),name="user-password"),
-    path('info-manager/',include("info_manager.urls",namespace="info_manager")),
-    path('presale/',include("presale.urls",namespace="presale")),
-    path('postsale/',include("postsale.urls",namespace="postsale")),
-    path('maintainance/',include("maintainance.urls",namespace="maintainance"))
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path("admin/", admin.site.urls),
+    path("login/", CustomedLoginView.as_view(), name="login"),
+    path("logout/", LogoutView.as_view(), name="logout"),
+    path("", MainPanelView.as_view(), name="main_panel"),
+    path("menu/", MenuView.as_view(), name="menu"),
+    path("user-profile/", UserProfileView.as_view(), name="user-profile"),
+    path("user-password/", PasswordChangeView.as_view(), name="user-password"),
+    path("info-manager/", include("info_manager.urls", namespace="info_manager")),
+    path("presale/", include("presale.urls", namespace="presale")),
+    path("postsale/", include("postsale.urls", namespace="postsale")),
+    path("maintainance/", include("maintainance.urls", namespace="maintainance")),
+    path("api/v1/", include("api.urls", namespace="api")),
+    path("api/v1/dj-rest-auth/login/", ApiLoginView.as_view(), name="api-login"),
+    path("api/v1/dj-rest-auth/", include("dj_rest_auth.urls")),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

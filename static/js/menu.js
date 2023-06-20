@@ -16,7 +16,22 @@ function gotoLink(link) {
 
 function initialPage() {
   getMenu();
-  getOutboundPayList();
+  welcomePage();
+  //getOutboundPayList();
+}
+
+function welcomePage(){
+  const mainContent = document.getElementById("main-content");
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", `info-manager/welcome/`, true);
+  xhr.onload = function () {
+    if (this.status === 200) {
+      const responseText = JSON.parse(this.responseText);
+      content = responseText.content;
+      mainContent.innerHTML = content;
+    }
+  };
+  xhr.send();
 }
 
 function renderMenu(parent_module, menus) {
