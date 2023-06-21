@@ -1,0 +1,50 @@
+@import url("base.884b6b1dae13.css");
+
+.panel {
+    width: 60%;
+    margin: auto;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 10px lightgray;
+}
+
+.panel .title {
+    margin: auto;
+    padding: 3em 2em;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #3DAAC2;
+    overflow: hidden;
+}
+
+.panel h3 {
+    margin: 0;
+    color: white;
+}
+
+.panel .list-container {
+    width: 100%;
+    padding: 3em 2em;
+    display: flex;
+    gap: 10px;
+
+
+}
+.panel ul {
+    width: 50%;
+    list-style-type: none;
+    background-color: #3daac26f;
+    padding: 1em;
+    border-radius: 5px;
+}
+.panel li {
+    font-size: 0.8rem;
+    padding: 0.2em;
+    cursor: pointer;
+}
+.panel li:hover {
+    background-color: #3DAAC2;
+    color:white
+}

@@ -1,0 +1,212 @@
+@import url("base.884b6b1dae13.css");
+
+
+.main{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+}
+.menu{
+    width: 25%;
+    min-height: 100vh;
+    background: #3DAAC2;
+    position: relative;
+}
+.main-content {
+    width: 70%;
+    height: 100%;
+}
+
+.logo{
+    display: block;
+    width: 100px;
+    margin-left: 20px;
+}
+.menu-info {
+    color:white;
+}
+.info {
+    position: relative;
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+.info h5 {
+    margin-block-start:0px;
+    margin-block-end:0px;
+    margin: 0;
+    padding: 0;
+    margin-left:10px;
+}
+.info h3 {
+    margin-block-start:0px;
+    margin-block-end:0px;
+    margin: 0;
+    padding: 0;
+    margin-left:15px;
+}
+.title,.contact {
+    width: 60%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 5px;
+}
+.separator {
+    width: 100%;
+    height: 2px;
+    background: white;
+}
+.photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 100px;
+    position: absolute;
+    right: 20px;
+    top: -15px;
+    border: 5px solid #3DAAC2;
+}
+.menu-items {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color:white;
+    width: 100%;
+}
+.menu-item {
+    width: 100%;
+    padding:0.5em 2em;
+    font-size: 0.625rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+.menu-item i {
+    color:#fcc60d;
+    font-size:10px;
+}
+.menu-item-title {
+    display: flex;
+    align-items: center;
+}
+
+.menu-item-title i {
+    width: 20px;
+    height: 20px;
+    font-size:20px;
+    color:#fcc60d;
+    background-color: 3DAAC2;
+    margin-right: 10px;
+}
+.menu-second i {
+    width: 15px;
+    height: 15px;
+    font-size:15px;
+}
+.menu-second {
+    background-color: white;
+    color:#3DAAC2;
+    padding-left: 3em;
+}
+.menu-second:hover{
+    background-color: rgb(237, 237, 237);
+}
+
+.btn-logout {
+    position: absolute;
+    display: block;
+    border:none;
+    padding: 0.3em;
+    background-color: #efb800;
+    text-decoration: none;
+    width: 90%;
+    left: 50%;
+    right: 50%;
+    bottom: 5px;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    color:white;
+    text-transform: uppercase;
+    border-radius: 7px;
+    padding:0.5em;
+}
+.btn-logout:hover {
+    background-color: #fcc60d;
+}
+.main-content {
+    min-height: 100vh;
+    display: flex;
+}
+/* utilities */
+
+.hide {
+    display: none;
+    transition: 0.5s;
+}
+
+.content-container {
+    width: 80%;
+    margin: auto;
+    min-height: 100vh;
+}
+
+.content-container h1 {
+    color:#3DAAC2;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding-bottom: 20px;
+    border: none;
+    border-bottom: 2px solid #fcc60d;
+    text-align: center;
+}
+.content-container table {
+    width: 100%;
+    margin: auto;
+
+}
+.content-container tr {
+    width: 100%;
+}
+.content-container tr th,
+.content-container tr td{
+    text-align: center;
+    color: white;
+    font-size: 0.8rem;
+    padding: 0.5em;
+}
+.content-container tr th{
+    background-color: #3DAAC2;
+    border-radius: 3px;
+}
+.content-container tr td{
+    color:black;
+}
+.content-container tr:nth-child(even) td{
+    background-color: rgb(237, 237, 237);
+}
+.content-container tr:nth-child(odd) td{
+    background-color: rgb(215, 215, 215);
+}
+.content-container tr:hover td{
+    background-color: #3daac26f;
+}
+.operations {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+.form-container {
+    width: 60%;
+    margin: auto;
+}
+

@@ -1,0 +1,51 @@
+
+#equipment-container{
+    width: 60%;
+    padding: 10px;
+}
+#device-container{
+    width: 80%;
+    text-align: center;
+    padding: 10px 50px;
+}
+#equipment-container,
+#device-container {
+    margin: auto;
+    border: 1px solid darkgrey;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    color: darkgray;
+    padding-left: 0;
+}
+#equipment-container .row,
+#device-container .row {
+    margin: 10px;
+    display: flex;
+}
+
+#equipment-container .row h5{
+    font-size: 0.8rem;
+}
+#device-container .row h5 {
+    font-size: 1rem;
+    color:rgb(80, 80, 80)
+}
+.inbound-image {
+    width: 100%;
+}
+#device-update-form {
+    display: flex;
+    align-items: center;
+    gap:20px;
+}
+
+#supplier-operations {
+    display: flex;
+    justify-content: flex-start;
+}
+#supplier-operations *{
+    margin-right: 20px;
+}
+#supplier-operations input {
+    width: 20%;
+}

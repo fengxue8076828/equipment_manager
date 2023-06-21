@@ -1,0 +1,114 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}
+
+/* Typography */
+
+h3 {
+  font-size: 1.25rem;
+}
+h4 {
+  font-size: 1rem;
+  margin: 0.5em;
+}
+h5 {
+  font-size: 0.75rem;
+  margin: 0.5em;
+}
+
+.btn {
+  font-size: 0.7rem;
+  background-color: #fcc60d;
+  border: none;
+  border-radius: 5px;
+  padding: 0.7em 1em;
+  margin-right: 0.3em;
+  cursor: pointer;
+}
+
+select {
+  padding: 0.875em 1em;
+  padding-bottom: 0.5em;
+  border: 1px solid darkgray;
+  border-radius: 5px;
+}
+
+form select {
+  width: 100%;
+}
+label {
+  font-size: 0.9rem;
+  position: absolute;
+  color: darkgray;
+  top: -10px;
+  left: 20px;
+  background-color: white;
+  padding: 0em 0.3em;
+}
+
+input {
+  padding: 0.875em 1em;
+  padding-bottom: 0.5em;
+  width: 100%;
+  border: 1px solid darkgray;
+  border-radius: 5px;
+}
+input:disabled {
+  border: none;
+  border-bottom: 1px solid #3daac2;
+  border-radius: 0;
+  background-color: white;
+}
+input:focus {
+  border: 1px solid #3daac2;
+  outline: none;
+  box-shadow: none;
+}
+
+table input {
+  font-size: 0.8rem;
+  padding: 0.875em 1em;
+  padding-bottom: 0.5em;
+  width: 100%;
+  border: 1px solid darkgray;
+  border-radius: 5px;
+}
+table input:read-only {
+  border: none;
+  border-bottom: 1px solid #3daac2;
+  border-radius: 0;
+  background-color: white;
+  color: rgb(107, 107, 107);
+}
+table input:focus {
+  border: 1px solid #3daac2;
+  outline: none;
+  box-shadow: none;
+}
+
+.pagination {
+  width: 30%;
+  margin: 20px 0px 20px auto;
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+  gap: 10px;
+}
+textarea {
+  padding: 0.875em 1em;
+  border: 1px solid darkgray;
+  border-radius: 5px;
+}
+textarea:focus{
+  border: 1px solid #3daac2;
+  outline: none;
+  box-shadow: none;
+}

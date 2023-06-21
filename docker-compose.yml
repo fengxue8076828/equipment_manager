@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    command: gunicorn equipment_manager.wsgi -b 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      - "SECRET_KEY=django-insecure-&%g2rak*5+s)^z$+g%8(o80+@fxw(po8z-z5q0r4-uz(*l$z%&"
+      - "DJANGO_DEBUG=False"
+      - "AWS_ACCESS_KEY_ID=AKIAW46GCGKCYFUYMP7K"
+      - "AWS_SECRET_ACCESS_KEY=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"
+
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+
+volumes:
+  postgres_data:

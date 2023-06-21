@@ -1,0 +1,72 @@
+@import url("base.css");
+body {
+    background-color: #3DAAC2;
+}
+
+#form-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+    height:100vh;
+    margin: auto;
+}
+.logo{
+    width: 150px;
+}
+#form-wrapper{
+    width: 60%;
+    background: white;
+    margin: auto;
+    padding:50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgb(160, 159, 159);
+}
+.title {
+    align-self: flex-start;
+}
+
+label {
+    font-size: .8rem;
+    color:darkgray;
+    letter-spacing: .1rem;
+
+}
+input[type=text],input[type=password]{
+    padding: 10px 20px;
+    border:none;
+    border-bottom: 2px solid darkgray;
+    background-color: white!important;
+    border-radius: 5px;
+}
+
+form {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+form p{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 15px;
+}
+.btn {
+    padding: 10px 15px;
+    background-color: #3DAAC2;
+    color:white;
+    border:none;
+    border-radius: 5px;
+    width: 30%;
+    align-self: flex-end;
+    margin-top:20px;
+    text-align: center;
+}

@@ -1,0 +1,17 @@
+#maintainance-operations {
+  display: flex;
+  justify-content: flex-start;
+}
+
+#maintainance-operations * {
+  margin-right: 20px;
+}
+#maintainance-operations input {
+  width: 20%;
+}
+#id_is_finished {
+  width: 10%;
+}
+#id_description {
+  width: 100%;
+}
