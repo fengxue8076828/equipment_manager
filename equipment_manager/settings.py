@@ -140,7 +140,11 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
     ]
 }
-ALLOWED_HOSTS = ["equipmentmanager.herokuapp.com", "127.0.0.1"]
+ALLOWED_HOSTS = [
+    "equipmentmanager-c40a00783638.herokuapp.com",
+    "equipmentmanager.herokuapp.com",
+    "127.0.0.1",
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
