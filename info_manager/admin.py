@@ -11,11 +11,6 @@ class CustomedUserAdmin(UserAdmin):
         "username",
         "real_name",
     ]
-    fields = (
-        "username",
-        "email",
-        "role",
-    )
 
 
 admin.site.register(User, CustomedUserAdmin)
