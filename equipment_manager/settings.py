@@ -140,6 +140,8 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
     ]
 }
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 ALLOWED_HOSTS = [
     "equipmentmanager-c40a00783638.herokuapp.com",
     "equipmentmanager.herokuapp.com",
