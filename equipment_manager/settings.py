@@ -11,31 +11,19 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
 import os
-import environ
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-env = environ.Env()
-env.read_env()
-
-# READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
-# if READ_DOT_ENV_FILE:
-#     # OS environment variables take precedence over variables from .env
-#     env.read_env(str(BASE_DIR / ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
+load_dotenv()
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DJANGO_DEBUG")
-AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
-AWS_S3_REGION_NAME = "eu-central-1"
-AWS_STORAGE_BUCKET_NAME = "equipmentmanager"
+DEBUG = os.environ.get("DJANGO_DEBUG")
 
 
 # Application definition
@@ -101,19 +89,15 @@ WSGI_APPLICATION = "equipment_manager.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    # "default": env.db(
-    #     "DATABASE_URL",
-    #     default="postgres:///equipment_manager",
-    # ),
-    # "default": {
-    #     "ENGINE": "django.db.backends.postgresql",
-    #     "NAME": "postgres",
-    #     "USER": "postgres",
-    #     "PASSWORD": "postgres",
-    #     "HOST": "db",
-    #     "PORT": 5432,
-    # }
-    "default": dj_database_url.config(conn_max_age=600, ssl_require=True)
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "HOST": os.environ.get("DB_HOST"),
+        "PORT": os.environ.get("DB_PORT"),
+    }
+    # "default": dj_database_url.config(conn_max_age=600, ssl_require=True)
 }
 
 
@@ -146,6 +130,7 @@ ALLOWED_HOSTS = [
     "equipmentmanager-c40a00783638.herokuapp.com",
     "equipmentmanager.herokuapp.com",
     "127.0.0.1",
+    "localhost",
 ]
 
 # Internationalization
@@ -167,9 +152,12 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-MEDIA_URL = "https://equipmentmanager.s3.amazonaws.com/media/"
+MEDIA_URL = "media/"
+# MEDIA_URL = "https://equipmentmanager.s3.amazonaws.com/media/"
 MEDIA_ROOT = BASE_DIR / "media"
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+# DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

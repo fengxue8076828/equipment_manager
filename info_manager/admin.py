@@ -1,16 +1,19 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import User, Role, Module, EquipCategory, Warehouse
-from .forms import UserCreateForm
+from .forms import UserChangeAdminForm
 
 # Register your models here.
 
 
 class CustomedUserAdmin(UserAdmin):
-    list_display = [
-        "username",
-        "real_name",
-    ]
+    form = UserChangeAdminForm
+    fieldsets = UserAdmin.fieldsets + (
+        (
+            None,
+            {"fields": ("real_name", "fix_phone_number", "cellphone_number", "role")},
+        ),
+    )
 
 
 admin.site.register(User, CustomedUserAdmin)

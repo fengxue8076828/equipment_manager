@@ -18,6 +18,9 @@ function updateUser(e) {
   xhr.onload = function () {
     if (this.status == 200) {
       const contentText = JSON.parse(this.responseText);
+      if(contentText.message == "failed"){
+        alert("更新失败！")
+      }
       if (contentText.message == "success") {
         alert("更新成功！");
         const xhr1 = new XMLHttpRequest();
