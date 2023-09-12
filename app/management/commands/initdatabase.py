@@ -49,7 +49,7 @@ class Command(BaseCommand):
             name="仓库管理",
             parent_module_id=1,
             icon='<i class="fa-solid fa-warehouse"></i>',
-            link="info-manager/category-list/",
+            link="info-manager/warehouse-list/",
         )
         Module.objects.create(
             name="客户管理",

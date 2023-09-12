@@ -140,9 +140,13 @@ function enable(e) {
   e.target.removeAttribute("disabled");
 }
 
+//debug汇总-更新解决了不好编辑的问题
 function updateSoldDevice(e) {
   const soldDeviceId = e.target.closest("tr").dataset.id;
-
+  e.target.closest("tr").querySelector("input").disabled=true
+  const selectElelements = e.target.closest("tr").querySelectorAll("select")
+  const selectArray = [...selectElelements]
+  selectArray.forEach(e=>e.disabled=true)
   const fixAddress = document.querySelector(
     `[data-id='${soldDeviceId}'] input[name='fix-address']`
   ).value;
@@ -150,9 +154,14 @@ function updateSoldDevice(e) {
     `[data-id='${soldDeviceId}'] select[name='maintainer']`
   ).value;
 
+  const state = document.querySelector(
+    `[data-id='${soldDeviceId}'] select[name='state']`
+  ).value;
+
   const data = new FormData();
   data.append("maintainer", maintainer);
   data.append("fix_address", fixAddress);
+  data.append("state",state)
 
   const xhr = new XMLHttpRequest();
   xhr.open("POST", `postsale/device-sold-modify/${soldDeviceId}/`);
@@ -296,9 +305,10 @@ function backToOutboundList() {
 }
 
 function enableDeviceEdit(element) {
-  console.log(element.querySelector("input"));
   element.querySelector("input").disabled = false;
-  element.querySelector("select").disabled = false;
+  const selectElements = element.querySelectorAll("select")
+  const selectArray = [...selectElements]
+  selectArray.forEach(e=>e.disabled=false)
 }
 
 function disableDeviceEdit(element) {

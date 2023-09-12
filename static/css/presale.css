@@ -35,8 +35,9 @@
 }
 #device-update-form {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap:20px;
+    gap:10px;
 }
 
 #supplier-operations {

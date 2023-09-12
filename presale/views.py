@@ -179,7 +179,11 @@ class EquipmentDeviceListView(generic.ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         equipment_id = self.kwargs["equipment_id"]
-        queryset = queryset.filter(equipment__id=equipment_id).filter(is_sold=False)
+        queryset = (
+            queryset.filter(equipment__id=equipment_id)
+            .filter(is_sold=False)
+            .order_by("id")
+        )
         return queryset
 
     def get_context_data(self, **kwargs):

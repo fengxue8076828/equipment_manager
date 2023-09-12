@@ -30,8 +30,6 @@ class Equipment(models.Model):
         Supplier, null=True, blank=True, on_delete=models.SET_NULL
     )
     model = models.CharField(max_length=100)
-    hardware_serial = models.CharField(max_length=200)
-    software_serial = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     sale_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     is_active = models.BooleanField(default=True)
@@ -85,6 +83,8 @@ class Device(models.Model):
         on_delete=models.SET_NULL,
         related_name="devices",
     )
+    hardware_serial = models.CharField(max_length=200)
+    software_serial = models.CharField(max_length=200)
     state = models.CharField(max_length=100, choices=state_choices)
     inbound = models.ForeignKey(Inbound, null=True, on_delete=models.SET_NULL)
     is_sold = models.BooleanField(default=False, null=True)

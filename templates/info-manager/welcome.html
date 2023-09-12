@@ -28,11 +28,29 @@
             <td>有{{ low_device_number }} 个设备库存数量低于2台</td>
             <td><button class="btn" onclick="gotoLink('presale/equipment-list/')">查看</button></td>   
         </tr>
-        {% else %}
+        {% elif request.user.role.id == 4 %}
         <tr>
             <td>有{{ malfunction_records_count }} 个故障设备在维修</td>
             <td><button class="btn" onclick="gotoLink('maintainance/malfunction-record-list/')">查看</button></td>   
         </tr>
+        {% elif request.user.role.id == 5 %}
+        <tr>
+            <td>有{{ overdued_outbounds_count }} 个出货单已经到期，尚未结算</td>
+            <td><button class="btn" onclick="gotoLink('postsale/outbound-pay-list/')">查看</button></td> 
+        </tr>
+        {% elif request.user.role.id == 6 %}
+        <tr>
+            <h1>欢迎回来！销售经理，{{request.user.real_name}}</h1>
+        </tr>
+        {% elif request.user.role.id == 7 %}
+        <tr>
+            <h1>欢迎回来！项目经理，{{request.user.real_name}}</h1>
+        </tr>
+        {% elif request.user.role.id == 8 %}
+        <tr>
+            <h1>欢迎回来！培训师，{{request.user.real_name}}</h1>
+        </tr>        
+
         {% endif %}
 
     </table>

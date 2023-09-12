@@ -12,6 +12,8 @@
       <th>设备ID</th>
       <th>供货商</th>
       <th>仓库</th>
+      <th>硬件编号</th>
+      <th>软件编号</th>
       <th>入库日期</th>
       <th>操作员</th>
       <th>维护人</th>
@@ -23,9 +25,15 @@
       <td>{{device.id}}</td>
       <td>{{device.supplier}}</td>
       <td>{{device.warehouse}}</td>
+      <td>{{device.hardware_serial}}</td>
+      <td>{{device.software_serial}}</td>
       <td>{{device.inbound.inbound_date|date:"Y-m-d"}}</td>
       <td>{{device.inbound.inbound_operator}}</td>
+      {% if device.maintainer %}
       <td>{{device.maintainer.real_name}}</td>
+      {% else %}
+      <td>无维护人</td>
+      {% endif %}
       {% if device.state == 'bad' %}
       <td>故障</td>
       {% elif device.state == 'maintaining' %}

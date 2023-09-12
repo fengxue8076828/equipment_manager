@@ -31,6 +31,11 @@ function userCreateSubmit(e) {
   const mainContent = document.getElementById("main-content");
   form = document.getElementById("user-create-form");
   data = new FormData(form);
+  //bug汇总-修正不选择角色可以添加的问题
+  if(!data.get("role")){
+    alert("请选择角色！")
+    return
+  }
   xhr = new XMLHttpRequest();
   xhr.open("POST", "info-manager/user-create/", true);
   xhr.onload = function () {
@@ -77,31 +82,89 @@ function filterUsers() {
   gotoLink(link);
 }
 
+//bug汇总-更新了添加删除角色不能直接操作父节点的问题。
 function addModule(e) {
-  const formList = document.getElementById("from-list");
+  const fromList = document.getElementById("from-list");
   const toList = document.getElementById("to-list");
-  moduleId = e.target.dataset.moduleId;
-  parentModuleId = e.target.dataset.parentModuleId;
+  element = e.target.cloneNode(true)
+  element.removeAttribute("onbdlclick")
+  element.setAttribute("ondbclick","removeModule(event)")
+  
 
-  if (!toList.querySelector(`[data-module-id='${moduleId}']`)) {
-    element = e.target.cloneNode(true);
-    element.setAttribute("ondblclick", "removeModule(event)");
-    parent = toList.querySelector(`[data-module-id='${parentModuleId}']`);
-    if (!parent) {
-      parent = from.querySelector(`[data-module-id='${parentModuleId}']`);
-      toList.appendChild(parent);
+  if(!e.target.dataset.parentModuleId){
+    if (!toList.querySelector(`[data-module-id='${element.dataset.moduleId}']`)) {
+      parent = e.target.cloneNode(true);
+      parent.removeAttribute("ondblclick")
+      parent.setAttribute("ondblclick", "removeModule(event)");
+      adjcentParent = toList.querySelector(`[data-module-id='${element.dataset.moduleId*1+1}']`)
+      if(adjcentParent){
+        insertBefore(adjcentParent,parent)
+      }else{
+        insertAfter(toList.lastChild,parent);
+      }
+      const children = fromList.querySelectorAll(`[data-parent-module-id='${element.dataset.moduleId}']`)
+      childrenArray = [...children]
+      let last = parent
+      childrenArray.forEach(child=>{
+        childClone = child.cloneNode(true)
+        childClone.removeAttribute("ondblclick")
+        childClone.setAttribute("ondblclick","removeModule(event)")
+        insertAfter(last,childClone)
+        last = childClone
+      })
     }
-    insertAfter(parent, element);
+  }else{
+    const parentModuleId = element.dataset.parentModuleId;
+    const moduleId = element.dataset.moduleId
+    if (!toList.querySelector(`[data-module-id='${moduleId}']`)) {
+      parent = toList.querySelector(`[data-module-id='${parentModuleId}']`);
+      if (!parent) {
+        parent = fromList.querySelector(`[data-module-id='${parentModuleId}']`).cloneNode(true)
+        parent.setAttribute("ondblclick", "removeModule(event)");
+        adjcentParent = toList.querySelector(`[data-module-id='${parentModuleId*1+1}']`)
+        if(adjcentParent){
+          insertBefore(adjcentParent,parent)
+        }else{
+          toList.appendChild(parent);
+        }
+        insertAfter(parent, element)
+        return
+      }
+      const children = toList.querySelectorAll(`[data-parent-module-id='${parentModuleId}']`)
+      if(!children.length){
+        insertAfter(parent,element)
+      }else{
+        const adjcentChild = [...children].find((child)=>child.dataset.moduleId*1>moduleId*1)
+        if(adjcentChild){
+          insertBefore(adjcentChild,element)
+          return
+        }
+        insertAfter([...children][children.length-1],element)
+      }
+    }
   }
 }
 
 function removeModule(e) {
+  const moduleId = e.target.dataset.moduleId
+  const parentModuleId = e.target.dataset.parentModuleId
   const toList = document.getElementById("to-list");
+  if(!parentModuleId){
+    const children = toList.querySelectorAll(`[data-parent-module-id='${moduleId}']`)
+    const childrenArray = [...children]
+    childrenArray.forEach(child=>toList.removeChild(child))
+    toList.removeChild(e.target)
+    return
+  } 
   toList.removeChild(e.target);
 }
 function updateRole() {
   const toList = document.getElementById("to-list");
   const roleId = document.getElementById("role-list").value;
+  if(toList.children.length == 0){
+    alert("请选择至少一个模块！")
+    return
+  }
   if (toList.children.length > 0) {
     const selectedModules = [...toList.children].map(
       (child) => child.dataset.moduleId
@@ -141,6 +204,10 @@ function getRoleModules(e) {
 function insertAfter(referenceNode, newNode) {
   referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
+function insertBefore(referenceNode, newNode){
+  referenceNode.parentNode.insertBefore(newNode,referenceNode)
+}
+
 
 function toggle(e) {
   if (e.target.textContent == "展开二级类别") {
@@ -291,6 +358,9 @@ function warehouseCreateSubmit(e) {
 function updateWarehouse(e) {
   warehouseId = e.target.closest("tr").dataset.id;
 
+  const fields = e.target.closest("tr").querySelectorAll("input")
+  const fieldsArray = [...fields]
+  fieldsArray.forEach(field=>field.disabled=true)
   const number = document.querySelector(
     `[data-id='${warehouseId}'] input[name='number']`
   ).value;
@@ -356,4 +426,10 @@ function deviceListByWarehouse(e) {
 }
 function warehouseList() {
   gotoLink("info-manager/warehouse-list/");
+}
+
+function enableWarehouseEdit(e){
+  const fields = e.querySelectorAll("input")
+  const fieldsArray = [...fields]
+  fieldsArray.forEach(field=>field.disabled=false)
 }

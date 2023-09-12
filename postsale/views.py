@@ -134,6 +134,7 @@ class DeviceSoldModifyView(View):
         form = DeviceSoldUpdateForm(self.request.POST)
         if form.is_valid():
             instance.fix_address = form.cleaned_data["fix_address"]
+            instance.state = form.cleaned_data["state"]
             device = instance.device
             device.maintainer = form.cleaned_data["maintainer"]
             instance.save()
@@ -145,7 +146,7 @@ class DeviceSoldModifyView(View):
 class DeviceSoldListView(ListView):
     model = DeviceSold
     context_object_name = "sold_devices"
-    paginate_by = 5
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

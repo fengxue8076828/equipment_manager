@@ -12,6 +12,9 @@ class CustomedAuthenticationForm(AuthenticationForm):
 
 
 class UserForm(forms.ModelForm):
+    # bug汇总-修正了不选择图片不能更新的问题
+    photo = forms.ImageField(required=False)
+
     class Meta:
         model = User
         fields = ["real_name", "fix_phone_number", "cellphone_number", "email", "photo"]
