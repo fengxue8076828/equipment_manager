@@ -5,29 +5,33 @@ from info_manager.models import Role, Module
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        Role.objects.create(name="系统管理员")
-        Role.objects.create(name="操作员")
-        Role.objects.create(name="库存管理员")
-        Role.objects.create(name="维修工程师")
-        Module.objects.create(
+        admin = Role.objects.create(name="系统管理员")
+        operator = Role.objects.create(name="操作员")
+        warehouse_manager = Role.objects.create(name="库存管理员")
+        maintainer = Role.objects.create(name="维修工程师")
+        accountant = Role.objects.create(name="会计师")
+        saler = Role.objects.create(name="销售经理")
+        manager = Role.objects.create(name="项目经理")
+        trainer = Role.objects.create(name="培训师")
+        info = Module.objects.create(
             name="基本信息管理",
             parent_module_id=None,
             icon="<i class='fa-solid fa-circle-info'></i>",
             link=None,
         )
-        Module.objects.create(
+        presale = Module.objects.create(
             name="售前管理",
             parent_module_id=None,
             icon="<i class='fa-solid fa-universal-access'></i>",
             link=None,
         )
-        Module.objects.create(
+        postsale = Module.objects.create(
             name="售后管理",
             parent_module_id=None,
             icon="<i class='fa-brands fa-speakap'></i>",
             link=None,
         )
-        Module.objects.create(
+        maintain = Module.objects.create(
             name="检修管理",
             parent_module_id=None,
             icon="<i class='fa-solid fa-screwdriver-wrench'></i>",
@@ -123,4 +127,28 @@ class Command(BaseCommand):
             icon='<i class="fa-solid fa-bug"></i>',
             link="maintainance/malfunction-record-list/",
         )
+        admin.modules.add(info)
+        admin.modules.add(presale)
+        admin.modules.add(postsale)
+        admin.modules.add(maintain)
+
+        operator.modules.add(presale)
+        operator.modules.add(postsale)
+
+        warehouse_manager.modules.add(presale)
+
+        maintainer.modules.add(maintain)
+
+        accountant.modules.add(postsale)
+
+        saler.modules.add(presale)
+        saler.modules.add(postsale)
+
+        manager.modules.add(presale)
+
+        trainer.modules.add(info)
+        trainer.modules.add(presale)
+        trainer.modules.add(postsale)
+        trainer.modules.add(maintain)
+
         self.stdout.write(self.style.SUCCESS("Roles and Modules created successfully."))
