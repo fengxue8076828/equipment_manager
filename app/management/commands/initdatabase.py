@@ -131,24 +131,32 @@ class Command(BaseCommand):
         admin.modules.add(presale)
         admin.modules.add(postsale)
         admin.modules.add(maintain)
+        admin.save()
 
         operator.modules.add(presale)
         operator.modules.add(postsale)
+        operator.save()
 
         warehouse_manager.modules.add(presale)
+        warehouse_manager.save()
 
         maintainer.modules.add(maintain)
+        maintainer.save()
 
         accountant.modules.add(postsale)
+        accountant.save()
 
         saler.modules.add(presale)
         saler.modules.add(postsale)
+        saler.save()
 
         manager.modules.add(presale)
+        manager.save()
 
         trainer.modules.add(info)
         trainer.modules.add(presale)
         trainer.modules.add(postsale)
         trainer.modules.add(maintain)
+        trainer.save()
 
         self.stdout.write(self.style.SUCCESS("Roles and Modules created successfully."))
