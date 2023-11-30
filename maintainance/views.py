@@ -87,7 +87,7 @@ class DeviceMalfunctionRecordCreate(generic.CreateView):
         device_id = self.kwargs["id"]
         device = Device.objects.get(id=device_id)
         form.instance.device = device
-        obj = form.save()
+        obj = form.save(commit=False)
         obj.dispatch_date = timezone.now().date()
         obj.maintainer = device.maintainer
         obj.save()
